@@ -14,6 +14,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['domain'=>config('project.api_domain'),'prefix'=>'api','namespace'=>'Api','as'=>'api.'], function(){
+    Route::get('/',[
+        'as'=>'index',
+        'uses'=>'HomeController@index',
+    ]);
+    Route::resource('category.posts', 'PostsController',[
+        'only'=>['index']
+    ]);
+    Route::resource('posts', 'PostsController');
+    Route::resource('posts.content','ContentController',[
+        'only'=>['index']
+    ]);
+    Route::resource('comments', 'CommentsController',[
+        'only'=>['show','update','destroy']
+    ]);
+    Route::resource('posts.comments', 'PostsController',[
+        'only'=>['index','store']
+    ]);
 });

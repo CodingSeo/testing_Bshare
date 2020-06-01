@@ -3,8 +3,7 @@ namespace App\Transformers;
 use App\Post;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class postTransformer{
-
+class PostTransformer{
     public function withPagination(LengthAwarePaginator $posts)
     {
         $payload = [
@@ -14,23 +13,23 @@ class postTransformer{
             'last_page' => $posts->lastPage(),
             'next_page_url' => $posts->nextPageUrl(),
             'prev_page_url' => $posts->previousPageUrl(),
-            //array_map (callback, 'post')
+            //array_map (callback, 'item')
             'data' => array_map([$this, 'transform'], $posts->items()),
         ];
         return response()->json($payload,200,[],JSON_PRETTY_PRINT);
     }
 
-    public function withItem(post $post)
+    public function withItem(Post $post)
     {
         return response()->json($this->transform($post),200,[],JSON_PRETTY_PRINT);
     }
     
-    public function transform(post $post)
+    public function transform(Post $post)
     {
         return [
             'id' => $post->id,
             'title' => $post->title,
-            'content' => $post->content()->text,
+            'content' => $post->content()->get('body'),
             'view_count' => $post->view_count,
             'created' => $post->created_at->toIso8601String(),
             // 'attachments'  => $post->attachments->count(),
@@ -38,7 +37,7 @@ class postTransformer{
             'links' => [
                 [
                     'rel' => 'self',
-                    'href' => route('dev.api.posts.show', $post->id),
+                    'href' => route('api.posts.show', $post->id),
                 ],
             ],
         ];

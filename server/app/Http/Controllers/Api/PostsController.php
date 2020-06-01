@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostsRequest;
 use Illuminate\Support\Facades\DB;
-use App\Transformers\ArticleTransformer;
+use App\Transformers\PostTransformer;
 
 use App\Category;
 use App\Post;
@@ -15,23 +15,22 @@ class PostsController extends Controller
 {
     public function show(Post $post)
     {
-        // return response()->json([
-        //     'post' => $post,
-        //     'content'=>$post->content()->get()
-        // ], 200);
-        return (new ArticleTransformer) -> withItem($post);
+        return (new PostTransformer) -> withItem($post);
     }
 
     public function store(PostsRequest $request)
     {
-        DB::beginTransaction();
+        $post = new Post;
         $content = new Content;
+        $post -> fill($request->all());
         $content->body = $request->body;
-        $content->post_id = Post::create($request->all())->id;
+        DB::beginTransaction();
+        $post ->save();
+        $content->post_id = $post->id;
         $content->save();
         DB::commit();
-        
         return response()->json([
+            'code'=>200,
             'status' => 'success'
         ],200);
     }
@@ -44,7 +43,6 @@ class PostsController extends Controller
             'body'=>$request->body
         ]);
         DB::commit();
-
         return response()->json([
             'status' => 'succes11s'
         ], 200);

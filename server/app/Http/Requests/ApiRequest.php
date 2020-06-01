@@ -12,9 +12,11 @@ class ApiRequest extends FormRequest
         throw new HttpResponseException(response()->json([
         'code' => 422,
         'errors' => $validator->errors(),
-        // 'dict' =>route()
         'links' =>[
-            
+            [
+                'rel' => 'self',
+                'href' => $this->getRedirectUrl(),
+            ],
         ]
         ], 422,[],JSON_PRETTY_PRINT));
     }

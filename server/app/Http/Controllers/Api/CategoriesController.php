@@ -9,13 +9,12 @@ use App\Category;
 
 class CategoriesController extends Controller
 {
-    
-    public function index(Category $category)
+
+    public function index($category_id)
     {
-        return (new PostTransformer)->withPagination($category->posts()->latest()->paginate(5));
+        //Eloquent
+        $posts = Category::find($category_id)->posts()->latest()->paginate(5);
+
+        return (new PostTransformer)->withPagination($posts);
     }
-    // public function index($category_id)
-    // {
-    //  return (new PostTransformer)->withPagination Category::find($category_id)->posts()->latest()->paginate(5));
-    // }
 }

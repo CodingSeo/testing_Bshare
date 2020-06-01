@@ -40,7 +40,7 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     ]);
     Route::delete('posts/{post_id}', [
         'as' => 'posts.delete',
-        'uses' => 'PostsController@delete'
+        'uses' => 'PostsController@destroy'
     ]);
     //comments
     Route::get('comments/{comment_id}', [
@@ -53,7 +53,7 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     ]);
     Route::delete('comments/{comment_id}', [
         'as' => 'comments.delete',
-        'uses' => 'CommentsController@delete'
+        'uses' => 'CommentsController@destroy'
     ]);
     Route::post('posts/{posts_id}/comments/{comment_id}', [
         'as' => 'posts.comments.store',

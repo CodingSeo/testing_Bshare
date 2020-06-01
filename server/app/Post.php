@@ -8,16 +8,20 @@ use App\Content;
 
 class Post extends Model
 {
-    
-    protected $fillable = ['category_id','title'];
-    protected $hidden =['id'];
-    public function category(){
+    protected $fillable = ['category_id', 'title'];
+    protected $hidden = ['id'];
+
+
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
-    public function comments(){
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
     }
-    public function content(){
+    public function content()
+    {
         return $this->hasOne(Content::class);
     }
 }

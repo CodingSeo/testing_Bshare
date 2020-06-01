@@ -8,6 +8,7 @@ use App\Content;
 
 class Post extends Model
 {
+    
     protected $fillable = ['category_id','title'];
     protected $hidden =['id'];
     public function category(){

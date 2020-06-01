@@ -29,10 +29,7 @@ class PostsController extends Controller
         $content->post_id = $post->id;
         $content->save();
         DB::commit();
-        return response()->json([
-            'code'=>200,
-            'status' => 'success'
-        ],200);
+        return (new PostTransformer) -> withItem($post);
     }
 
     public function update(Post $post, PostsRequest $request)
@@ -43,16 +40,12 @@ class PostsController extends Controller
             'body'=>$request->body
         ]);
         DB::commit();
-        return response()->json([
-            'status' => 'succes11s'
-        ], 200);
+        return (new PostTransformer) -> withItem($post);
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
-        return response()->json([
-            'status' => 'success'
-        ], 200);
+        return (new PostTransformer) -> withItem($post);
     }
 }

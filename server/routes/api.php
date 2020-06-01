@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,29 +15,48 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['namespace'=>'Api','as'=>'api.'], function(){
-    Route::get('/',[
-        'as'=>'index',
-        'uses'=>'HomeController@index',
+Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
+    Route::get('/', [
+        'as' => 'index',
+        'uses' => 'HomeController@index',
     ]);
-    
-    Route::resource('category.posts', 'CategoriesController',[
-        'only'=>['index']
+    //category
+    Route::get('category/{category_id}/posts', [
+        'as' => 'category.posts',
+        'uses' => 'CategoriesController@index'
     ]);
-    // Route::get('category/{category_id}/posts',[
-    //     'as'=>'category.posts',
-    //     'uses'=>'CategoriesController@index'
-    // ]);
-
-    Route::resource('posts', 'PostsController',[
-        'except'=>['index','edit','create']
+    //post
+    Route::get('posts/{post_id}', [
+        'as' => 'posts.show',
+        'uses' => 'PostsController@show'
     ]);
-
-    Route::resource('comments', 'CommentsController',[
-        'only'=>['show','update','destroy']
+    Route::post('posts/{post_id}', [
+        'as' => 'posts.store',
+        'uses' => 'PostsController@store'
     ]);
-    
-    Route::resource('posts.comments', 'PostsController',[
-        'only'=>['index','store']
+    Route::put('posts/{post_id}', [
+        'as' => 'posts.update',
+        'uses' => 'PostsController@update'
+    ]);
+    Route::delete('posts/{post_id}', [
+        'as' => 'posts.delete',
+        'uses' => 'PostsController@delete'
+    ]);
+    //comments
+    Route::get('comments/{comment_id}', [
+        'as' => 'comments.show',
+        'uses' => 'CommentsController@show'
+    ]);
+    Route::put('comments/{comment_id}', [
+        'as' => 'comments.update',
+        'uses' => 'CommentsController@update'
+    ]);
+    Route::delete('comments/{comment_id}', [
+        'as' => 'comments.delete',
+        'uses' => 'CommentsController@delete'
+    ]);
+    Route::post('posts/{posts_id}/comments/{comment_id}', [
+        'as' => 'posts.comments.store',
+        'uses' => 'PostsController@store'
     ]);
 });

@@ -11,10 +11,5 @@ use app\helpers;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    // public function __construct() {
-    //     if (! is_api_domain()) {
-    //         $this->setSharedVariables();
-    //     }
-    // }
-    
+
 }

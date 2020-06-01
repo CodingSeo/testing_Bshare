@@ -14,21 +14,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['domain'=>config('project.api_domain'),'prefix'=>'api','namespace'=>'Api','as'=>'api.'], function(){
+Route::group(['namespace'=>'Api','as'=>'api.'], function(){
     Route::get('/',[
         'as'=>'index',
         'uses'=>'HomeController@index',
     ]);
-    Route::resource('category.posts', 'PostsController',[
+    
+    Route::resource('category.posts', 'CategoriesController',[
         'only'=>['index']
     ]);
-    Route::resource('posts', 'PostsController');
-    Route::resource('posts.content','ContentController',[
-        'only'=>['index']
+    // Route::get('category/{category_id}/posts',[
+    //     'as'=>'category.posts',
+    //     'uses'=>'CategoriesController@index'
+    // ]);
+
+    Route::resource('posts', 'PostsController',[
+        'except'=>['index','edit','create']
     ]);
+
     Route::resource('comments', 'CommentsController',[
         'only'=>['show','update','destroy']
     ]);
+    
     Route::resource('posts.comments', 'PostsController',[
         'only'=>['index','store']
     ]);

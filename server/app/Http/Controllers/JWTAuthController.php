@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -43,7 +43,7 @@ class JWTAuthController extends Controller
     public function refresh() {
         return (new UserTransformer)->respondWithToken(auth('api')->refresh());
     }
-    
+
     public function logout(){
         auth()->logout();
         return (new UserTransformer)->logout();

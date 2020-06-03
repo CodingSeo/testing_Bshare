@@ -14,7 +14,7 @@ class PostTransformer{
             'next_page_url' => $posts->nextPageUrl(),
             'prev_page_url' => $posts->previousPageUrl(),
             //array_map (callback, 'item')
-            'data' => array_map([$this, 'transform'], $posts->items()),
+            // 'data' => array_map([$this, 'transform'], $posts->items()),
         ];
         return response()->json($payload,200,[],JSON_PRETTY_PRINT);
     }
@@ -23,7 +23,7 @@ class PostTransformer{
     {
         return response()->json($this->transform($post),200,[],JSON_PRETTY_PRINT);
     }
-    
+
     public function transform(Post $post)
     {
         return [
@@ -37,7 +37,7 @@ class PostTransformer{
             'links' => [
                 [
                     'rel' => 'self',
-                    'href' => route('api.posts.show', $post->id),
+                    // 'href' => route('api.posts.show', $post->id),
                 ],
             ],
         ];

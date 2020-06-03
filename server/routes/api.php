@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +21,7 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     ]);
     //category
     Route::get('category/{category_id}/posts', [
-        'as' => 'category.posts',
+        'as' => 'category.index',
         'uses' => 'CategoriesController@index'
     ]);
     //post

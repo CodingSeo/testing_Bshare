@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,8 +13,8 @@ class CategoriesController extends Controller
     public function index($category_id)
     {
         //Eloquent
-        $posts = Category::find($category_id)->posts()->latest()->paginate(5);
+        // $posts = Category::find($category_id)->posts()->latest()->paginate(5);
 
-        return (new PostTransformer)->withPagination($posts);
+        // return (new PostTransformer)->withPagination($posts);
     }
 }

@@ -33,6 +33,7 @@ return array(
     'App\\Http\\Requests\\JWT\\JWTRegisterRequest' => $baseDir . '/app/Http/Requests/JWT/JWTRegisterRequest.php',
     'App\\Http\\Requests\\JWT\\JWTRequest' => $baseDir . '/app/Http/Requests/JWT/JWTRequest.php',
     'App\\Http\\Requests\\PostsRequest' => $baseDir . '/app/Http/Requests/PostsRequest.php',
+    'App\\Models\\Post' => $baseDir . '/app/Models/Post.php',
     'App\\Post' => $baseDir . '/app/Post.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

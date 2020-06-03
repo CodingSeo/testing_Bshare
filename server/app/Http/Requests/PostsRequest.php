@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
-use App\Http\Requests\ApiRequest;
-class PostsRequest extends ApiRequest
+
+use App\Http\Requests\BshareRequest;
+
+class PostsRequest extends BshareRequest
 {
     public function authorize()
     {

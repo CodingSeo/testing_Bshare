@@ -2,7 +2,9 @@
 
 namespace App\Providers\Bshare;
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\ServiceProvider;
+use App\Http\Requests\BshareRequest;
 
 class ControllerProvider extends ServiceProvider
 {
@@ -15,7 +17,12 @@ class ControllerProvider extends ServiceProvider
     {
         //
         $container = app();
-        $container->when()
+        //homecontroller
+        // $container->when(HomeController::Class)->needs(Tra)
+        //postscontroller
+        // $container->when(PostsController::class)->needs(BshareRequest::class)->give(PostsRequest::class);
+        // $container->when(PostsController::class)->needs(Service::class)->give(PostsService::class);
+
     }
 
     /**
@@ -25,6 +32,6 @@ class ControllerProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $container = app();
     }
 }

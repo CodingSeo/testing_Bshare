@@ -6,11 +6,11 @@ use App\Transformers\Transformer;
 
 class HomeController extends Controller
 {
-    private $transform;
-    public function __construct(Transformer $transForm)
-    {
-        $this->transform = $transForm;
-    }
+    // private $transform;
+    // public function __construct(Transformer $transForm)
+    // {
+    //     $this->transform = $transForm;
+    // }
     public function index()
     {
         return response()->json([
@@ -19,7 +19,7 @@ class HomeController extends Controller
             'links' => [
                 [
                     'rel' => 'self',
-                    'href' => route('api.index'),
+                    // 'href' => route('api.index'),
                 ],
             ]
         ], 200, [], JSON_PRETTY_PRINT);

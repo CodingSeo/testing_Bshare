@@ -18,9 +18,6 @@ class ServicesProvider extends ServiceProvider
     {
         $container = app();
 
-        //postscontroller
-        $container->when(PostsController::class)->needs(Request::class)->give(PostsRequest::class);
-        $container->when(PostsController::class)->needs(Service::class)->give(PostsService::class);
 
 
     }

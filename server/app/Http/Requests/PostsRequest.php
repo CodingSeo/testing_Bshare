@@ -14,7 +14,7 @@ class PostsRequest extends ApiRequest
         return [
             'title' => ['required','max:255'],
             'body' => ['required'],
-            'category_id' =>['required','exists:categories,id'],
+            'category_id' =>['required'],
         ];
     }
     public function messages()
@@ -22,7 +22,6 @@ class PostsRequest extends ApiRequest
         return [
             'required' => ':attribute is required',
             'max'  => ':attribute should be shorter',
-            'exists' =>':attribute does not exist'
         ];
     }
     public function attributes()
@@ -30,9 +29,8 @@ class PostsRequest extends ApiRequest
         return [
             'title' => 'title',
             'body'  => 'body',
-            'category_id'=>'category_id',
         ];
     }
-    
+
 
 }

@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BshareRequest;
-
+use App\Http\Requests\ApiRequest;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
     private $request, $service, $transform;
-    // public function __construct(BshareRequest $request
-    // // , Service $service, Transformer $transform)
-    // )
-    // {
-    //     $this->request = $request;
-    //     // $this->service = $service;
-    //     // $this->transform = $transform;
-    // }
+    public function __construct(APIRequest $request
+    // , Service $service, Transformer $transform)
+    )
+    {
+        $this->request = $request;
+        // $this->service = $service;
+        // $this->transform = $transform;
+    }
     public function show($post_id)
     {
 

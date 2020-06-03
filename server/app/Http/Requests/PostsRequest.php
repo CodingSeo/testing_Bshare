@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\BshareRequest;
-
-class PostsRequest extends BshareRequest
+use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\ApiRequest;
+class PostsRequest extends ApiRequest
 {
     public function authorize()
     {

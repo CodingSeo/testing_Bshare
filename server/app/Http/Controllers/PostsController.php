@@ -10,8 +10,7 @@ use Illuminate\Http\Request;
 class PostsController extends Controller
 {
     private $request, $service, $transform;
-    public function __construct(APIRequest $request
-    // , Service $service, Transformer $transform)
+    public function __construct( Service $service,// Transformer $transform)
     )
     {
         $this->request = $request;

@@ -1,10 +1,8 @@
 <?php
 
-namespace App;
+namespace App\EloquentModel;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use App\Content;
 
 class Post extends Model
 {

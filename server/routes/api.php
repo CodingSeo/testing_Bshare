@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group([ 'as' => 'api.'], function () {
+Route::group(['as' => 'api.'], function () {
     Route::get('/', [
         'as' => 'index',
         'uses' => 'HomeController@index',
@@ -29,18 +28,18 @@ Route::group([ 'as' => 'api.'], function () {
         'as' => 'posts.show',
         'uses' => 'PostsController@show'
     ]);
-    // Route::post('posts/{post_id}', [
-    //     'as' => 'posts.store',
-    //     'uses' => 'PostsController@store'
-    // ]);
-    // Route::put('posts/{post_id}', [
-    //     'as' => 'posts.update',
-    //     'uses' => 'PostsController@update'
-    // ]);
-    // Route::delete('posts/{post_id}', [
-    //     'as' => 'posts.delete',
-    //     'uses' => 'PostsController@destroy'
-    // ]);
+    Route::post('posts', [
+        'as' => 'posts.store',
+        'uses' => 'PostsController@store'
+    ]);
+    Route::put('posts/{post_id}', [
+        'as' => 'posts.update',
+        'uses' => 'PostsController@update'
+    ]);
+    Route::delete('posts/{post_id}', [
+        'as' => 'posts.delete',
+        'uses' => 'PostsController@destroy'
+    ]);
     // //comments
     // Route::get('comments/{comment_id}', [
     //     'as' => 'comments.show',

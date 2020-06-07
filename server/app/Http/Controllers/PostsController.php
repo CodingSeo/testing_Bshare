@@ -3,64 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ApiRequest;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\PostsRequest;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
+<<<<<<< HEAD
     private $request, $service, $transform;
     public function __construct( Service $service,// Transformer $transform)
     )
+=======
+    protected $service;
+    public function __construct(PostService $service)
+>>>>>>> 726dcae87e93861b29eec960a76bb668692ff5d3
     {
-        $this->request = $request;
-        // $this->service = $service;
-        // $this->transform = $transform;
+        $this->service = $service;
     }
     public function show($post_id)
     {
-
-        // $post = $this->service->getPost($post_id);
-        // return $this->transform->transform($post);
-
+        $post = $this->service->getPost($post_id);
+        return $post;
     }
 
-    // public function store(Request $request)
-    // {
-    //     return $request;
-    //     //Eloquent
-    //     // $post = new Post;
-    //     // $content = new Content;
-    //     // $post->fill($request->all());
-    //     // $content->body = $request->body;
-    //     // DB::beginTransaction();
-    //     // $post->save();
-    //     // $content->post_id = $post->id;
-    //     // $content->save();
-    //     // DB::commit();
+    public function store(PostsRequest $request)
+    {
+        $post = $this->service->storePost($request->all());
+        return $post;
+    }
 
-    //     // return (new PostTransformer)->withItem($post);
-    // }
+    public function update($post_id, PostsRequest $request)
+    {
+        //Eloquent
+        $post = $this->service->updatePost($post_id, $request->all());
+        return $post;
+    }
 
-    // public function update($post_id, Request $request)
-    // {
-    //     //Eloquent
-    //     $post = Post::find($post_id);
-    //     DB::beginTransaction();
-    //     $post->update($request->all());
-    //     $post->content()->update([
-    //         'body' => $request->body
-    //     ]);
-    //     DB::commit();
-
-    //     return (new PostTransformer)->withItem($post);
-    // }
-
-    // public function destroy($post_id)
-    // {
-    //     //Eloquent
-    //     $post = Post::find($post_id)->delete();
-
-    //     return (new PostTransformer)->withItem($post);
-    // }
+    public function destroy($post_id)
+    {
+        //Eloquent
+        $post = $this->service->deletePost($post_id);
+        return $post;
+    }
 }

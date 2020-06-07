@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Transformers\PostTransformer;
-use App\Category;
+use App\Services\CategoryService;
 
 class CategoriesController extends Controller
 {
-
+    protected $category_service;
+    public function __construct(CategoryService $category_service)
+    {
+        $this->category_service = $category_service;
+    }
     public function index($category_id)
     {
         //Eloquent
-        // $posts = Category::find($category_id)->posts()->latest()->paginate(5);
-
-        // return (new PostTransformer)->withPagination($posts);
+        $posts = $this->category_service->getPostsWithCategory($category_id);
+        return $posts;
     }
 }

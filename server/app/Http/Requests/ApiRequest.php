@@ -11,20 +11,12 @@ abstract class APIRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
-        return true;
-    }
+    public abstract function authorize();
 
     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
      */
-    public function rules()
-    {
-        return [
-            //
-        ];
-    }
+    public abstract function rules();
 }

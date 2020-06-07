@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\EloquentModel;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -16,22 +16,24 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $hidden = [
-        'password','password_bcrypt','id'
+        'password', 'password_bcrypt', 'id'
     ];
 
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function getJWTIdentifier() {
+    public function getJWTIdentifier()
+    {
         return $this->getKey();
     }
 
-    public function getJWTCustomClaims() {
+    public function getJWTCustomClaims()
+    {
         return [
-            'firstname'=>$this->firstname,
-            'lastname'=>$this->lastname,
-            'email'=>$this->email
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'email' => $this->email
         ];
     }
 }

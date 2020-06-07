@@ -19,9 +19,12 @@ class PostService
             return "no post";
         }
         $content = $this->post_repository->getContent($post);
+        $comments = $this->post_repository->getComments($post);
         $this->post_repository->inceaseViewCount($post);
-        $postWithContent = collect($post)->merge($content);
-        return $postWithContent;
+        $postWithInfo = collect($post)
+            ->merge($content)
+            ->union(['comments' => $comments]);
+        return $postWithInfo;
     }
     public function storePost(array $post_info)
     {

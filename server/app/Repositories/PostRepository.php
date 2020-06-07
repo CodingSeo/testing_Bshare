@@ -27,6 +27,10 @@ class PostRepository
     {
         return $post->content()->first();
     }
+    public function getComments($post)
+    {
+        return $post->comments()->latest()->get();
+    }
     public function saveContent($post_id, $body)
     {
         $this->content->post_id = $post_id;

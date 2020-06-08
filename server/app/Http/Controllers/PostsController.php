@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostsRequest;
-use App\Services\PostService;
+use App\Services\Interfaces\PostService;
 use App\Transformers\PostTransformer;
-use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {

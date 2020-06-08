@@ -13,8 +13,11 @@ class RepositoryProvider extends ServiceProvider
      */
     public function register()
     {
-        //
         $container = app();
+        $container->when(PostsController::class)->needs(ApiRequest::class)->give(PostsRequest::class);
+        $container->when(PostsController::class)->needs(ApiRequest::class)->give(PostsRequest::class);
+        $container->when(PostsController::class)->needs(ApiRequest::class)->give(PostsRequest::class);
+        $container->when(PostsController::class)->needs(ApiRequest::class)->give(PostsRequest::class);
     }
 
     /**

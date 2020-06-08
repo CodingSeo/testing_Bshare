@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Implement;
 
 use App\EloquentModel\Category;
+use App\Repositories\interfaces\CategoryRepository;
 
-class CategoryRepository
+class CategoryRepositoryImp implements CategoryRepository
 {
     protected $category;
     public function __construct(Category $category)

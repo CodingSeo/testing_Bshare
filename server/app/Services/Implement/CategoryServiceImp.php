@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Implement;
 
-use App\Repositories\CategoryRepository;
+use App\Repositories\interfaces\CategoryRepository;
+use App\Services\Interfaces\CategoryService;
 
-class CategoryService
+class CategoryServiceImp implements CategoryService
 {
     protected $category_repository;
     public function __construct(CategoryRepository $category_repository)

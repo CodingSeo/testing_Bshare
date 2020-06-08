@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Implement;
 
 use App\EloquentModel\Content;
 use App\EloquentModel\Post;
+use App\Repositories\interfaces\ContentRepository;
 
-
-class ContentRepository
+class ContentRepositoryImp implements ContentRepository
 {
     protected $content;
     public function __construct(Content $content)

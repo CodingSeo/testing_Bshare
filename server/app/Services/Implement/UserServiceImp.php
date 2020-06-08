@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Implement;
 
 use App\Repositories\UserRepository;
+use App\Services\Interfaces\JWTUserService;
 
-class UserService
+class UserServiceImp implements JWTUserService
 {
     protected $user_repository;
     public function __construct(UserRepository $user_repository)

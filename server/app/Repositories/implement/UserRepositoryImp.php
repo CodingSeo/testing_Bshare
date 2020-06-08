@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Implement;
 
 use App\EloquentModel\User;
+use App\Repositories\interfaces\UserRepository;
 
-class UserRepository
+class UserRepositoryImp implements UserRepository
 {
     protected $user;
     public function __construct(User $user)

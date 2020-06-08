@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Implement;
 
 use App\Repositories\CommentRepository;
 use App\Repositories\PostRepository;
+use App\Services\Interfaces\CommentService;
 
-class CommentService
+class CommentServiceImp implements CommentService
 {
     protected $comment_repository, $post_repository;
     public function __construct(PostRepository $post_repository, CommentRepository $comment_repository)

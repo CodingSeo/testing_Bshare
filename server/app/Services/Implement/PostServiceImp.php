@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Implement;
 
 use App\Repositories\PostRepository;
+use App\Services\Interfaces\PostService;
 use Illuminate\Support\Facades\DB;
 
-class PostService
+class PostServiceImp implements PostService
 {
     protected $post_repository;
     public function __construct(PostRepository $post_repository)

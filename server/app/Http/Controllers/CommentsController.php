@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentsRequest;
-use App\Services\CommentService;
+use App\Services\Interfaces\CommentService;
 
 class CommentsController extends Controller
 {

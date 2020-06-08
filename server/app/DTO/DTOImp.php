@@ -1,7 +1,7 @@
 <?php
 namespace App\DTO;
 
-class DTO
+class DTOImp
 {
    private $entity;
 

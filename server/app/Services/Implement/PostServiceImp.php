@@ -2,7 +2,7 @@
 
 namespace App\Services\Implement;
 
-use App\Repositories\PostRepository;
+use App\Repositories\Interfaces\PostRepository;
 use App\Services\Interfaces\PostService;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +13,7 @@ class PostServiceImp implements PostService
     {
         $this->post_repository = $post_repository;
     }
-    public function getPost($post_id)
+    public function getPost(int $post_id)
     {
         $post = $this->post_repository->getPostById($post_id);
         if (!$post) return "no post";
@@ -34,7 +34,7 @@ class PostServiceImp implements PostService
         $postWithContent = collect($post)->merge($content);
         return $postWithContent;
     }
-    public function updatePost($post_id, array $post_info)
+    public function updatePost(int $post_id, array $post_info)
     {
         $post = $this->post_repository->getPostById($post_id);
         if (!$post) return "no post";
@@ -45,7 +45,7 @@ class PostServiceImp implements PostService
         $postWithContent = collect($post)->merge($content);
         return $postWithContent;
     }
-    public function deletePost($post_id)
+    public function deletePost(int $post_id)
     {
         $post = $this->post_repository->getPostById($post_id);
         if (!$post) return "no post";

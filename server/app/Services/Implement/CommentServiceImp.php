@@ -2,8 +2,8 @@
 
 namespace App\Services\Implement;
 
-use App\Repositories\CommentRepository;
-use App\Repositories\PostRepository;
+use App\Repositories\Interfaces\CommentRepository;
+use App\Repositories\Interfaces\PostRepository;
 use App\Services\Interfaces\CommentService;
 
 class CommentServiceImp implements CommentService

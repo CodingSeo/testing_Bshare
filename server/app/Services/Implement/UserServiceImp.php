@@ -2,7 +2,7 @@
 
 namespace App\Services\Implement;
 
-use App\Repositories\UserRepository;
+use App\Repositories\Interfaces\UserRepository;
 use App\Services\Interfaces\JWTUserService;
 
 class UserServiceImp implements JWTUserService

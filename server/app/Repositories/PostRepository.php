@@ -29,7 +29,8 @@ class PostRepository
     }
     public function getComments($post)
     {
-        return $post->comments()->latest()->get();
+        return $post->comments()->with('replies')->whereNull('parent_id')
+            ->latest()->get();
     }
     public function saveContent($post_id, $body)
     {

@@ -8,7 +8,6 @@ use Socialite;
 
 class SocialiteController extends Controller
 {
-    //
     public function redirectToProvider()
     {
         return Socialite::driver('hiworks')->stateless()->redirect()->getTargetUrl();

@@ -10,41 +10,39 @@ use App\Transformers\UserTransformer;
 
 class JWTAuthController extends Controller
 {
-    protected $user_service;
-    public function __construct(UserService $user_service)
+    protected $user_service, $transform;
+    public function __construct(UserService $user_service,UserTransformer $transform)
     {
         $this->user_service = $user_service;
+        $this->transform = $transform;
     }
     public function register(JWTRegisterRequest $request)
     {
         $user = $this->user_service->registerUser($request->all());
-        return $user;
+        return $this->transform->$user;
     }
     public function login(JWTRequest $request)
     {
-        //policy
-        if (!$token = auth('api')->attempt(
-            ['email' => $request->email, 'password' => $request->password]
-        )) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-        return (new UserTransformer)->respondWithToken($token);
+        //middleware
+        $token = $this->user_service->loginUser($request->all());
+        return $this->transform->respondWithToken($token);
     }
 
     public function user()
     {
-        // return (new UserTransformer)->withUser();
-        return response()->json(auth()->user());
+        $user_info = $this->user_service->getUserInfo();
+        return $this->transform->withUser($user_info);
     }
 
     public function refresh()
     {
-        return (new UserTransformer)->respondWithToken(auth('api')->refresh());
+        $refresh_info = $this->user_service->refreshToken();
+        return $this->transform->respondWithToken($refresh_info);
     }
 
     public function logout()
     {
-        auth()->logout();
-        return (new UserTransformer)->logout();
+        $this->user_service->logoutUser();
+        return $this->transform->logout();
     }
 }

@@ -18,6 +18,6 @@ class CategoryService
             return 'no such category';
         }
         $posts = $this->category_repository->getPostsByCategory($category);
-        return $posts;
+        return collect($posts);
     }
 }

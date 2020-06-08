@@ -41,7 +41,7 @@ Route::group(['as' => 'api.'], function () {
         'uses' => 'PostsController@destroy'
     ]);
     // //comments
-    Route::post('posts/{post_id}/comments', [
+    Route::post('comments', [
         'as' => 'posts.comments.store',
         'uses' => 'CommentsController@store'
     ]);

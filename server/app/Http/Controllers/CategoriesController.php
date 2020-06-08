@@ -17,7 +17,6 @@ class CategoriesController extends Controller
     public function index($category_id)
     {
         $posts = $this->category_service->getPostsWithCategory($category_id);
-        // return var_dump(collect($posts->get('data')));
         return $this->transformer->withPagination($posts);
     }
 }

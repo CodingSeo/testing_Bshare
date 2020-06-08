@@ -13,9 +13,9 @@ class CommentService
         $this->post_repository = $post_repository;
         $this->comment_repository = $comment_repository;
     }
-    public function storeComment($post_id, array $request)
+    public function storeComment(array $request)
     {
-        $post = $this->post_repository->getPostById($post_id);
+        $post = $this->post_repository->getPostById($request['post_id']);
         if (!$post) return 'no post';
         $comment = $this->comment_repository->saveComment($post, $request);
         return collect($comment);

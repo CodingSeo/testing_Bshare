@@ -16,6 +16,7 @@ class CommentRepository
         $comment = $post->comments()->create([
             'post_id'=>$post->id,
             'body'=>$request['body'],
+            'parent_id'=>$request['parent_id'],
         ]);
         return $comment;
     }

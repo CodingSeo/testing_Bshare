@@ -14,9 +14,9 @@ class CommentsController extends Controller
     {
         $this->comment_service = $comment_service;
     }
-    public function store($post_id, CommentsRequest $request)
+    public function store(CommentsRequest $request)
     {
-        $comment = $this->comment_service->storeComment($post_id, $request->all());
+        $comment = $this->comment_service->storeComment($request->all());
         return $comment;
     }
 

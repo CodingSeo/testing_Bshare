@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CommentsRequest;
 use App\Services\CommentService;
-use App\Services\PostService;
 use Illuminate\Http\Request;
 
 class CommentsController extends Controller
@@ -14,17 +14,21 @@ class CommentsController extends Controller
     {
         $this->comment_service = $comment_service;
     }
-    public function store($post_id, Request $request)
+    public function store($post_id, CommentsRequest $request)
     {
         $comment = $this->comment_service->storeComment($post_id, $request->all());
         return $comment;
     }
 
-    public function update(Request $request, $comment_id)
+    public function update($comment_id, CommentsRequest $request)
     {
+        $comment = $this->comment_service->updateComment($comment_id,$request->all());
+        return $comment;
     }
 
-    public function destroy($id)
+    public function destroy($comment_id)
     {
+        $comment = $this->comment_service->deleteComment($comment_id);
+        return $comment;
     }
 }

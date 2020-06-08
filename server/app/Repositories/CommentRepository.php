@@ -6,15 +6,26 @@ use App\EloquentModel\Comment;
 
 class CommentRepository
 {
-    protected $category;
+    protected $comment;
     public function __construct(Comment $comment)
     {
         $this->comment = $comment;
     }
     public function saveComment($post, $request)
     {
-        $post->comments()->$this->comment->fill($request);
-        $this->comment->save();
-        return $this->comment;
+        $comment = $post->comments()->create([
+            'post_id'=>$post->id,
+            'body'=>$request['body'],
+        ]);
+        return $comment;
+    }
+    public function getCommentByID($comment_id){
+        return $this->comment->find($comment_id);
+    }
+    public function updateComment($comment, $request){
+        return $comment->update($request);
+    }
+    public function deleteComment($comment){
+        return $comment->delete();
     }
 }

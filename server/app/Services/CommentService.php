@@ -16,10 +16,21 @@ class CommentService
     public function storeComment($post_id, array $request)
     {
         $post = $this->post_repository->getPostById($post_id);
-        if (!$post) {
-            return 'no post';
-        }
+        if (!$post) return 'no post';
         $comment = $this->comment_repository->saveComment($post, $request);
+        return collect($comment);
+    }
+    public function updateComment($comment_id,array $request){
+        $comment = $this->comment_repository->getCommentById($comment_id);
+        if(!$comment)return 'no comments';
+        $this->comment_repository->updateComment($comment, $request);
+        return $comment;
+    }
+    public function deleteComment($comment_id){
+        $comment = $this->comment_repository->getCommentById($comment_id);
+        if(!$comment)return 'no comments';
+        $result = $this->comment_repository->deleteComment($comment);
+        if(!$result) return 'failed delete comment';
         return $comment;
     }
 }

@@ -9,14 +9,8 @@ use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
-<<<<<<< HEAD
-    private $request, $service, $transform;
-    public function __construct( Service $service,// Transformer $transform)
-    )
-=======
     protected $service;
     public function __construct(PostService $service)
->>>>>>> 726dcae87e93861b29eec960a76bb668692ff5d3
     {
         $this->service = $service;
     }

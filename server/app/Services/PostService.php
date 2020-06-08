@@ -15,9 +15,7 @@ class PostService
     public function getPost($post_id)
     {
         $post = $this->post_repository->getPostById($post_id);
-        if (!$post) {
-            return "no post";
-        }
+        if (!$post) return "no post";
         $content = $this->post_repository->getContent($post);
         $comments = $this->post_repository->getComments($post);
         $this->post_repository->inceaseViewCount($post);
@@ -38,9 +36,7 @@ class PostService
     public function updatePost($post_id, array $post_info)
     {
         $post = $this->post_repository->getPostById($post_id);
-        if (!$post) {
-            return 'no post';
-        }
+        if (!$post) return "no post";
         DB::beginTransaction();
         $post = $this->post_repository->updatePost($post, $post_info);
         $content = $this->post_repository->updateContent($post, $post_info['body']);
@@ -51,13 +47,9 @@ class PostService
     public function deletePost($post_id)
     {
         $post = $this->post_repository->getPostById($post_id);
-        if (!$post) {
-            return 'no post';
-        }
+        if (!$post) return "no post";
         $result = $this->post_repository->deletePost($post);
-        if (!$result) {
-            return 'delete failed';
-        }
+        if (!$result) return 'delete failed';
         return collect($post);
     }
 }

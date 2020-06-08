@@ -45,8 +45,7 @@ class PostRepository
     }
     public function updatePost($post, $post_info)
     {
-        $post->update($post_info);
-        return $post;
+        return $post->update($post_info);
     }
     public function updateContent($post, $body)
     {
@@ -57,7 +56,6 @@ class PostRepository
     }
     public function deletePost($post)
     {
-        $post->delete();
-        return $post;
+        return $post->delete();
     }
 }

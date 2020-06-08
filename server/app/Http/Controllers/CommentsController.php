@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentsRequest;
 use App\Services\CommentService;
-use Illuminate\Http\Request;
 
 class CommentsController extends Controller
 {
@@ -16,6 +15,7 @@ class CommentsController extends Controller
     }
     public function store(CommentsRequest $request)
     {
+        $parent_id = $request->input('parent_id',null);
         $comment = $this->comment_service->storeComment($request->all());
         return $comment;
     }

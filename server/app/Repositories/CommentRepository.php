@@ -13,10 +13,14 @@ class CommentRepository
     }
     public function saveComment($post, $request)
     {
+        $parent_id = null;
+        if(array_key_exists('parent_id',$request)){
+            $parent_id = $request['parent_id'];
+        };
         $comment = $post->comments()->create([
             'post_id'=>$post->id,
             'body'=>$request['body'],
-            'parent_id'=>$request['parent_id'],
+            'parent_id'=>$parent_id,
         ]);
         return $comment;
     }

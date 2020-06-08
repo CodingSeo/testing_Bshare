@@ -2,20 +2,24 @@
 
 namespace App\Repositories;
 
+use App\DTO\DTO;
 use App\EloquentModel\Content;
 use App\EloquentModel\Post;
 
 class PostRepository
 {
-    protected $post, $content;
-    public function __construct(Post $post, Content $content)
+    protected $post, $content, $dto;
+    public function __construct(Post $post, Content $content, DTO $dto)
     {
         $this->post = $post;
         $this->content = $content;
+        $this->dto = $dto;
     }
     public function getPostById($post_id)
     {
-        return $this->post->find($post_id);
+        $post = $this->post->find($post_id);
+        dd($this->dto->make($post));
+        return $post;
     }
     public function savePost(array $post_info)
     {

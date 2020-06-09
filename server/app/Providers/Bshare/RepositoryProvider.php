@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Providers\Bshare;
-
 use App\DTO\DTO;
 use App\DTO\EloquentDTO;
 use App\Repositories\Implement\CategoryRepositoryImp;
@@ -29,6 +28,11 @@ class RepositoryProvider extends ServiceProvider
     {
         $container = app();
 
+        //binding careful
+        $container->bind(DTO::class,EloquentDTO::class);
+        #tag 사용 검토
+        // $container->when(PostsController::class)->needs(DTO::class)->give(EloquentDTO::class);
+
         $container->when(PostServiceImp::class)->needs(PostRepository::class)->give(PostRepositoryImp::class);
 
         $container->when(UserServiceImp::class)->needs(UserRepository::class)->give(UserRepositoryImp::class);
@@ -38,7 +42,6 @@ class RepositoryProvider extends ServiceProvider
         $container->when(CommentServiceImp::class)->needs(CommentRepository::class)->give(CommentRepositoryImp::class);
 
         $container->when(CategoryServiceImp::class)->needs(CategoryRepository::class)->give(CategoryRepositoryImp::class);
-
 
     }
 

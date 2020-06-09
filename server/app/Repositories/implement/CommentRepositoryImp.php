@@ -3,9 +3,9 @@
 namespace App\Repositories\Implement;
 
 use App\EloquentModel\Comment;
-use App\Services\Interfaces\CommentService;
+use App\Repositories\interfaces\CommentRepository;
 
-class CommentRepositoryImp implements CommentService
+class CommentRepositoryImp implements CommentRepository
 {
     protected $comment;
     public function __construct(Comment $comment)

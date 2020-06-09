@@ -2,6 +2,8 @@
 
 namespace App\Providers\Bshare;
 
+use App\DTO\DTO;
+use App\DTO\EloquentDTO;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\JWTAuthController;
@@ -26,9 +28,6 @@ class ServicesProvider extends ServiceProvider
     public function register()
     {
         $container = app();
-
-        //binding careful
-        $container->bind(DTO::class,EloquentDTO::class);
 
         $container->when(PostsController::class)->needs(PostService::class)->give(PostServiceImp::class);
 

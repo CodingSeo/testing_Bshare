@@ -2,6 +2,7 @@
 
 namespace App\Services\Implement;
 
+use App\DTO\DTO;
 use App\Repositories\Interfaces\PostRepository;
 use App\Services\Interfaces\PostService;
 use Illuminate\Support\Facades\DB;
@@ -13,22 +14,24 @@ class PostServiceImp implements PostService
     {
         $this->post_repository = $post_repository;
     }
-    public function getPost(int $post_id)
+    public function getPost(int $post_id) : DTO
     {
         $post = $this->post_repository->getPostById($post_id);
-        if (!$post) return "no post";
-        $content = $this->post_repository->getContent($post);
-        $comments = $this->post_repository->getComments($post);
-        $this->post_repository->inceaseViewCount($post);
-        $postWithInfo = collect($post)
-            ->merge($content)
-            ->union(['comments' => $comments]);
-        return $postWithInfo;
+        if (!$post) throw new \App\Exceptions\ModuleNotFound('Post not Found');
+        return $post;
+        // $content = $this->post_repository->getContent($post);
+        // $comments = $this->post_repository->getComments($post);
+        // $this->post_repository->inceaseViewCount($post);
+        // $postWithInfo = collect($post)
+        //     ->merge($content)
+        //     ->union(['comments' => $comments]);
+        // return $postWithInfo;
     }
     public function storePost(array $post_info)
     {
         DB::beginTransaction();
         $post = $this->post_repository->savePost($post_info);
+        //????????????????
         $content = $this->post_repository->saveContent($post->id, $post_info['body']);
         DB::commit();
         $postWithContent = collect($post)->merge($content);

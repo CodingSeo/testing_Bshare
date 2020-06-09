@@ -1,23 +1,26 @@
 <?php
 
 namespace App\DTO;
+
 use App\DTO\DTO;
 
 class EloquentDTO implements DTO
 {
-    private $entity;
-    public function map($model)
+    private $data;
+    public static function map($model)
     {
-        return new self($model);
+        if($model){
+            return new self($model);
+        }else return null;
     }
-    public function __construct(object $model)
+    public function __construct($model)
     {
-        $this->entity =  $model->toArray();
+        $this->data = $model->toArray();
     }
     public function __get($name)
     {
-        if (array_key_exists($name, (array) $this->entity)) {
-            return $this->entity[$name];
+        if (array_key_exists($name, (array) $this->data)) {
+            return $this->data[$name];
         } else return null;
     }
 }

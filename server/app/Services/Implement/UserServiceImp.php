@@ -3,9 +3,9 @@
 namespace App\Services\Implement;
 
 use App\Repositories\Interfaces\UserRepository;
-use App\Services\Interfaces\JWTUserService;
+use App\Services\Interfaces\UserService;
 
-class UserServiceImp implements JWTUserService
+class UserServiceImp implements UserService
 {
     protected $user_repository;
     public function __construct(UserRepository $user_repository)

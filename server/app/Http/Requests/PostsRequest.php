@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\ApiRequest;
 class PostsRequest extends ApiRequest
 {
@@ -10,7 +9,6 @@ class PostsRequest extends ApiRequest
     {
         return true;
     }
-
     public function rules()
     {
         return [
@@ -33,6 +31,4 @@ class PostsRequest extends ApiRequest
             'body'  => 'body',
         ];
     }
-
-
 }

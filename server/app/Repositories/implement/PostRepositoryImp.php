@@ -2,11 +2,11 @@
 
 namespace App\Repositories\Implement;
 
-use App\DTO\DTO;
-use App\DTO\EloquentDTO;
 use App\EloquentModel\Content;
 use App\EloquentModel\Post;
 use App\Repositories\interfaces\PostRepository;
+use App\DTO\Content\ContentDTO;
+use App\DTO\Content\PostContentDTO;
 
 class PostRepositoryImp implements PostRepository
 {
@@ -16,21 +16,21 @@ class PostRepositoryImp implements PostRepository
         $this->post = $post;
         $this->content = $content;
     }
-    public function getPostById($post_id)
+    public function getPostById(ContentDTO $content)
     {
-        $post = $this->post->find($post_id);
-        return EloquentDTO::map($post);
+        $post = $this->post->find($content->getPost_id());
+        return $post;
     }
     public function savePost(array $post_info)
     {
         $this->post->fill($post_info);
         $this->post->save();
-        return DTO::map($this->post);
+        return $this->post;
     }
     public function getContent($post)
     {
         $content = $post->content()->first();
-        return DTO::map($this->post);
+        return $content;
     }
     public function getComments($post)
     {
@@ -42,7 +42,7 @@ class PostRepositoryImp implements PostRepository
         $this->content->post_id = $post_id;
         $this->content->text = $body;
         $this->content->save();
-        return DTO::map($this->content);
+        return $this->content;
     }
     public function inceaseViewCount($post)
     {

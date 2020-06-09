@@ -2,9 +2,11 @@
 
 namespace App\Repositories\interfaces;
 
+use App\DTO\Content\ContentDTO;
+
 interface PostRepository
 {
-    public function getPostById($post_id);
+    public function getPostById(ContentDTO $content);
     public function savePost(array $post_info);
     public function getContent($post);
     public function getComments($post);

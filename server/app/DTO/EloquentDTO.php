@@ -1,6 +1,7 @@
 <?php
 
 namespace App\DTO;
+use App\DTO\DTO;
 
 class EloquentDTO implements DTO
 {

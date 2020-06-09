@@ -19,18 +19,18 @@ class PostRepositoryImp implements PostRepository
     public function getPostById($post_id)
     {
         $post = $this->post->find($post_id);
-        return $this->dto->make($post);
+        return $this->dto->map($post);
     }
     public function savePost(array $post_info)
     {
         $this->post->fill($post_info);
         $this->post->save();
-        return $this->dto->make($this->post);
+        return $this->dto->map($this->post);
     }
     public function getContent($post)
     {
         $content = $post->content()->first();
-        return $this->dto->make($content);
+        return $this->dto->map($content);
     }
     public function getComments($post)
     {
@@ -42,7 +42,7 @@ class PostRepositoryImp implements PostRepository
         $this->content->post_id = $post_id;
         $this->content->text = $body;
         $this->content->save();
-        return $this->dto->make($this->content);
+        return $this->dto->map($this->content);
     }
     public function inceaseViewCount($post)
     {
@@ -52,14 +52,14 @@ class PostRepositoryImp implements PostRepository
     public function updatePost($post, $post_info)
     {
         $post = $post->update($post_info);
-        return $this->dto->make($post);
+        return $this->dto->map($post);
     }
     public function updateContent($post, $body)
     {
         $post->content()->update([
             'text' => $body
         ]);
-        return $this->dto->make($this->getContent($post));
+        return $this->dto->map($this->getContent($post));
     }
     public function deletePost($post)
     {

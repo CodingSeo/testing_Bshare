@@ -26,9 +26,16 @@ class ServicesProvider extends ServiceProvider
     public function register()
     {
         $container = app();
+
+        //binding careful
+        $container->bind(DTO::class,EloquentDTO::class);
+
         $container->when(PostsController::class)->needs(PostService::class)->give(PostServiceImp::class);
+
         $container->when(JWTAuthController::class)->needs(UserService::class)->give(UserServiceImp::class);
+
         $container->when(CommentsController::class)->needs(CommentService::class)->give(CommentServiceImp::class);
+
         $container->when(CategoriesController::class)->needs(CategoryService::class)->give(CategoryServiceImp::class);
     }
 

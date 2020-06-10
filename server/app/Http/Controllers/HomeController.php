@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TestRequest;
 use App\Transformers\Transformer;
 
 class HomeController extends Controller
@@ -24,5 +25,9 @@ class HomeController extends Controller
                 ],
             ]
         ], 200, [], JSON_PRETTY_PRINT);
+    }
+    public function test(TestRequest $testrequest)
+    {
+        dd($testrequest);
     }
 }

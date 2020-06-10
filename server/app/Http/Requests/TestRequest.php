@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\ApiRequest;
+
 class TestRequest extends ApiRequest
 {
     public function authorize()
@@ -13,7 +14,7 @@ class TestRequest extends ApiRequest
     public function rules()
     {
         return [
-            'post_id' => ['required','numeric'],
+            // 'post_id' => ['required','numeric'],
         ];
     }
     public function messages()

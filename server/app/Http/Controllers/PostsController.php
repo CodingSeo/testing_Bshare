@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\DTO\Content\PostContentDTO;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\APIRequest;
 use App\Http\Requests\PostsRequest;
 use App\Http\Requests\TestRequest;
 use App\Services\Interfaces\PostService;
 use App\Transformers\PostTransformer;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
@@ -22,14 +18,11 @@ class PostsController extends Controller
         $this->service = $service;
         $this->transform = $transform;
     }
-    //return type
     public function show(TestRequest $request) : JsonResponse
     {
-        $content = new PostContentDTO($request->all());
-        $post = $this->service->getPost($content);
+        $post = $this->service->getPost($request->all());
         return $this->transform->withItem($post);
     }
-
     public function store(PostsRequest $request) : JsonResponse
     {
         $post = $this->service->storePost($request->all());

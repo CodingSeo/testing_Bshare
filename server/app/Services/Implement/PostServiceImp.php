@@ -9,13 +9,16 @@ use Illuminate\Support\Facades\DB;
 class PostServiceImp implements PostService
 {
     protected $post_repository;
+    protected $error_checker;
     public function __construct(PostRepository $post_repository)
     {
         $this->post_repository = $post_repository;
     }
+
     public function getPost($content)
     {
-        $post = $this->post_repository->getPostById($content);
+        $post = $this->post_repository->getPostById($content['post_id']);
+        // $this->error_checker->check($post);
         if (!$post) throw new \App\Exceptions\ModuleNotFound('Post not Found');
         return $post;
         $content = $this->post_repository->getContent($post);
@@ -28,7 +31,8 @@ class PostServiceImp implements PostService
 
         return $postWithInfo;
     }
-    public function storePost(array $post_info)
+
+    public function storePost($post_info)
     {
         DB::beginTransaction();
         $post = $this->post_repository->savePost($post_info);
@@ -37,7 +41,8 @@ class PostServiceImp implements PostService
         $postWithContent = collect($post)->merge($content);
         return $postWithContent;
     }
-    public function updatePost(int $post_id, array $post_info)
+
+    public function updatePost($post_id, $post_info)
     {
         $post = $this->post_repository->getPostById($post_id);
         if (!$post) return "no post";
@@ -48,7 +53,8 @@ class PostServiceImp implements PostService
         $postWithContent = collect($post)->merge($content);
         return $postWithContent;
     }
-    public function deletePost(int $post_id)
+
+    public function deletePost($post_id)
     {
         $post = $this->post_repository->getPostById($post_id);
         if (!$post) return "no post";

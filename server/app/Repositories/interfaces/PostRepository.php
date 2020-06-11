@@ -4,7 +4,7 @@ namespace App\Repositories\Interfaces;
 
 interface PostRepository
 {
-    public function getPostById($content);
+    public function getPostById(int $page_id);
     public function savePost($post_info);
     public function getContent($post);
     public function getComments($post);

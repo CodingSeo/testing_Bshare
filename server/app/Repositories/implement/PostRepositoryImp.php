@@ -2,22 +2,24 @@
 
 namespace App\Repositories\Implement;
 
+use App\DTO\Content\PostContentDTO;
 use App\EloquentModel\Content;
 use App\EloquentModel\Post;
 use App\Repositories\interfaces\PostRepository;
 
 class PostRepositoryImp implements PostRepository
 {
-    protected $post, $content;
+    protected $post, $content,$mapper;
     public function __construct(Post $post, Content $content)
     {
         $this->post = $post;
         $this->content = $content;
     }
-    public function getPostById($content)
+    public function getPostById(int $post_id)
     {
-        $post = $this->post->find(8);
+        $post = $this->post->findOrFail($post_id);
         return $post;
+        return $this->mapper->map($post, $post);
     }
     public function savePost($post_info)
     {

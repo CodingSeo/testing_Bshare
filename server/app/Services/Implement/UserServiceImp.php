@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Services\Implement;
-
 use App\Repositories\Interfaces\UserRepository;
 use App\Services\Interfaces\UserService;
 
@@ -27,11 +26,13 @@ class UserServiceImp implements UserService
         return $token;
     }
     public function getUserInfo(){
-        return collect(auth()->user());
+        return auth()->user();
     }
+
     public function refreshToken(){
         return auth('api')->refresh();
     }
+
     public function logoutUser(){
         return auth()->logout();
     }

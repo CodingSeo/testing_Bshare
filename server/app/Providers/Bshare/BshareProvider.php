@@ -2,6 +2,8 @@
 
 namespace App\Providers\Bshare;
 
+use App\DTO\Mapper\JSONMapperService;
+use App\DTO\Mapper\MapperService;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\JWTAuthController;
@@ -33,7 +35,10 @@ class BshareProvider extends ServiceProvider
      */
     public function register()
     {
+
+
         $container = app();
+        $container->singleton(MapperService::class, JSONMapperService::class);
 
         $container->when(PostsController::class)->needs(PostService::class)->give(PostServiceImp::class);
         $container->when(PostServiceImp::class)->needs(PostRepository::class)->give(PostRepositoryImp::class);
@@ -48,6 +53,7 @@ class BshareProvider extends ServiceProvider
 
         $container->when(UserServiceImp::class)->needs(UserRepository::class)->give(UserRepositoryImp::class);
         $container->when(JWTAuthController::class)->needs(UserService::class)->give(UserServiceImp::class);
+
 
     }
 

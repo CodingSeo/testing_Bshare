@@ -182,7 +182,7 @@ return [
         App\Providers\Bshare\RepositoryProvider::class,
         App\Providers\Bshare\ServicesProvider::class,
         App\Providers\Bshare\RequestProvider::class,
-
+        App\Providers\Bshare\BshareProvider::class,
     ],
 
     /*

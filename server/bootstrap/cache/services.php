@@ -41,6 +41,7 @@
     37 => 'App\\Providers\\Bshare\\RepositoryProvider',
     38 => 'App\\Providers\\Bshare\\ServicesProvider',
     39 => 'App\\Providers\\Bshare\\RequestProvider',
+    40 => 'App\\Providers\\Bshare\\BshareProvider',
   ),
   'eager' => 
   array (
@@ -69,6 +70,7 @@
     22 => 'App\\Providers\\Bshare\\RepositoryProvider',
     23 => 'App\\Providers\\Bshare\\ServicesProvider',
     24 => 'App\\Providers\\Bshare\\RequestProvider',
+    25 => 'App\\Providers\\Bshare\\BshareProvider',
   ),
   'deferred' => 
   array (

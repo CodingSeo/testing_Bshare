@@ -2,7 +2,7 @@
 
 namespace App\Services\Implement;
 
-use App\Repositories\interfaces\CategoryRepository;
+use App\Repositories\Interfaces\CategoryRepository;
 use App\Services\Interfaces\CategoryService;
 
 class CategoryServiceImp implements CategoryService

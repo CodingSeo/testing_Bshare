@@ -2,36 +2,37 @@
 
 namespace App\Services\Implement;
 
-use App\DTO\DTO;
 use App\Repositories\Interfaces\PostRepository;
 use App\Services\Interfaces\PostService;
 use Illuminate\Support\Facades\DB;
-use App\DTO\Content\ContentDTO;
-use App\DTO\Content\PostContentDTO;
 
 class PostServiceImp implements PostService
 {
     protected $post_repository;
+    protected $error_checker;
     public function __construct(PostRepository $post_repository)
     {
         $this->post_repository = $post_repository;
     }
-    public function getPost(ContentDTO $content) : DTO
+
+    public function getPost($content)
     {
-        $post = $this->post_repository->getPostById($content);
+        $post = $this->post_repository->getPostById($content['post_id']);
+        // $this->error_checker->check($post);
         if (!$post) throw new \App\Exceptions\ModuleNotFound('Post not Found');
         return $post;
-        // $content = $this->post_repository->getContent($post);
-        // $comments = $this->post_repository->getComments($post);
-        // $this->post_repository->inceaseViewCount($post);
+        $content = $this->post_repository->getContent($post);
+        $comments = $this->post_repository->getComments($post);
+        $this->post_repository->inceaseViewCount($post);
 
-        // $postWithInfo = collect($post)
-        //     ->merge($content)
-        //     ->union(['comments' => $comments]);
+        $postWithInfo = collect($post)
+            ->merge($content)
+            ->union(['comments' => $comments]);
 
-        // return $postWithInfo;
+        return $postWithInfo;
     }
-    public function storePost(array $post_info)
+
+    public function storePost($post_info)
     {
         DB::beginTransaction();
         $post = $this->post_repository->savePost($post_info);
@@ -40,7 +41,8 @@ class PostServiceImp implements PostService
         $postWithContent = collect($post)->merge($content);
         return $postWithContent;
     }
-    public function updatePost(int $post_id, array $post_info)
+
+    public function updatePost($post_id, $post_info)
     {
         $post = $this->post_repository->getPostById($post_id);
         if (!$post) return "no post";
@@ -51,7 +53,8 @@ class PostServiceImp implements PostService
         $postWithContent = collect($post)->merge($content);
         return $postWithContent;
     }
-    public function deletePost(int $post_id)
+
+    public function deletePost($post_id)
     {
         $post = $this->post_repository->getPostById($post_id);
         if (!$post) return "no post";

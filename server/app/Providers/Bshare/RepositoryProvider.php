@@ -34,15 +34,7 @@ class RepositoryProvider extends ServiceProvider
         #tag 사용 검토
         // $container->when(PostsController::class)->needs(DTO::class)->give(EloquentDTO::class);
 
-        $container->when(PostServiceImp::class)->needs(PostRepository::class)->give(PostRepositoryImp::class);
 
-        $container->when(UserServiceImp::class)->needs(UserRepository::class)->give(UserRepositoryImp::class);
-
-        $container->when(CommentServiceImp::class)->needs(PostRepository::class)->give(PostRepositoryImp::class);
-
-        $container->when(CommentServiceImp::class)->needs(CommentRepository::class)->give(CommentRepositoryImp::class);
-
-        $container->when(CategoryServiceImp::class)->needs(CategoryRepository::class)->give(CategoryRepositoryImp::class);
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Interfaces;
 
-interface UserRepository
+interface UserRepository extends EloquentRepository
 {
-    public function registerUser($user_info);
 }

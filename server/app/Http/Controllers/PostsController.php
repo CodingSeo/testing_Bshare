@@ -12,8 +12,8 @@ use Illuminate\Http\JsonResponse;
 class PostsController extends Controller
 {
     protected $service;
-
     protected $transform;
+
     public function __construct(PostService $service, PostTransformer $transform)
     {
         $this->service = $service;
@@ -24,27 +24,27 @@ class PostsController extends Controller
         $content = $request->only([
             'post_id'
         ]);
-
         $post = $this->service->getPost($content);
+        dd($post);
         return $this->transform->withItem($post);
     }
-    public function store(PostsRequest $request): JsonResponse
+    public function store(PostsRequest $request)
     {
         $content = $request->only([
-            'post_id','title','body','category_id'
+            'title', 'body', 'category_id'
         ]);
-
         $post = $this->service->storePost($content);
+        return $post;
         return $this->transform->withItem($post);
     }
 
     public function update(int $post_id, PostsRequest $request): JsonResponse
     {
         $content = $request->only([
-            'post_id','title','body','category_id'
+            'post_id', 'title', 'body', 'category_id'
         ]);
 
-        $post = $this->service->updatePost($content,$content);
+        $post = $this->service->updatePost($content, $content);
         return $post;
     }
 

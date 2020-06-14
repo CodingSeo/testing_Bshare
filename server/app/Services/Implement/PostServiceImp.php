@@ -20,7 +20,6 @@ class PostServiceImp implements PostService
         $post = $this->post_repository->getPostById($content['post_id']);
         // $this->error_checker->check($post);
         if (!$post) throw new \App\Exceptions\ModuleNotFound('Post not Found');
-        return $post;
         $content = $this->post_repository->getContent($post);
         $comments = $this->post_repository->getComments($post);
         $this->post_repository->inceaseViewCount($post);

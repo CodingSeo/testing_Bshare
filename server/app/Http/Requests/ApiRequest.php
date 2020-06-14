@@ -21,4 +21,17 @@ abstract class ApiRequest extends FormRequest
             ]
         ], 422, [], JSON_PRETTY_PRINT));
     }
+
+    public function messages()
+    {
+        return [
+            'required' => ':attribute is required',
+            'string' => ':attribute should be string',
+            'unique' => ':attribute is already taken',
+            'numeric' => ':attribute should be numeric',
+            'min' => ':attribute should be no shorter than 8 length',
+            'max'  => ':attribute should be no longer than 255 length',
+            'confirmed' => ':attribute does not match',
+        ];
+    }
 }

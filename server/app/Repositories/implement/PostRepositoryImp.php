@@ -9,7 +9,7 @@ use App\Repositories\interfaces\PostRepository;
 
 class PostRepositoryImp implements PostRepository
 {
-    protected $post, $content,$mapper;
+    protected $post, $content, $mapper;
     public function __construct(Post $post, Content $content)
     {
         $this->post = $post;

@@ -14,22 +14,17 @@ class CommentsRequest extends ApiRequest
     public function rules()
     {
         return [
-            'post_id'=>['numeric','required'],
-            'parent_id'=>['numeric'],
-            'body'=>['required','max:255'],
+            'post_id' => ['numeric', 'required'],
+            'parent_id' => ['numeric'],
+            'body' => ['required', 'max:255'],
         ];
     }
-    public function message(){
-        return[
-            'required'=>':attribute should be required.',
-            'numeric'=>':attribute should be numeric'
-        ];
-    }
-    public function attributes(){
-        return[
-            'post_id'=>'post_id',
-            'body'=>'body',
-            'parent_id'=>'parent_id'
+    public function attributes()
+    {
+        return [
+            'post_id' => 'post_id',
+            'body' => 'body',
+            'parent_id' => 'parent_id'
         ];
     }
 }

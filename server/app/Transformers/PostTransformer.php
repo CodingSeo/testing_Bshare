@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Transformers;
 
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class PostTransformer{
-    public function withPagination( $posts)
+class PostTransformer
+{
+    public function withPagination($posts)
     {
         $payload = [
             'total' => $posts->total,
@@ -15,18 +17,18 @@ class PostTransformer{
             'next_page_url' => $posts->next_page_url,
             'prev_page_url' => $posts->prev_page_url,
             // array_map (callback, 'item')
-            'data'=>$posts->data,
+            'data' => $posts->data,
             // 'data' => array_map([$this, 'transform'], collect($posts->get('data'))),
         ];
-        return response()->json($payload,200,[],JSON_PRETTY_PRINT);
+        return response()->json($payload, 200, [], JSON_PRETTY_PRINT);
     }
 
-    public function withItem( $post)
+    public function withItem($post)
     {
-        return response()->json($this->transform($post),200,[],JSON_PRETTY_PRINT);
+        return response()->json($this->transform($post), 200, [], JSON_PRETTY_PRINT);
     }
 
-    public function transform( $post)
+    public function transform($post)
     {
         return [
             'id' => $post->id,

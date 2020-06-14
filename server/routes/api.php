@@ -27,7 +27,11 @@ Route::group(['as' => 'api.'], function () {
         'as' => 'category.index',
         'uses' => 'CategoriesController@index'
     ]);
-    // //post
+    //post
+    Route::get('posts', [
+        'as' => 'posts.show',
+        'uses' => 'PostsController@show'
+    ]);
     Route::get('posts/{post_id}', [
         'as' => 'posts.show',
         'uses' => 'PostsController@show'

@@ -2,8 +2,10 @@
 
 namespace App\Repositories\Interfaces;
 
-interface PostRepository extends EloquentRepository, EloquentPagingRepository
+interface PostRepository extends EloquentRepository
 {
-    public function getContent($post);
-    public function getComments($post);
+    public function getContent(object $content): object;
+    public function getComments(object $content): array;
+    public function saveContent(int $post_id, array $content) : object;
+    public function updateContent($post, array $content) : object;
 }

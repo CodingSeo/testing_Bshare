@@ -4,8 +4,8 @@ namespace App\Services\Interfaces;
 
 interface PostService
 {
-    public function getPost($content);
-    public function storePost($post_info);
-    public function updatePost($post_id, $post_info);
-    public function deletePost($post_id);
+    public function getPost(array $content) :array;
+    public function storePost(array $content) : array;
+    public function updatePost(array $content);
+    public function deletePost(array $content);
 }

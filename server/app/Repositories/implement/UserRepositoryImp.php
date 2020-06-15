@@ -20,4 +20,19 @@ class UserRepositoryImp implements UserRepository
         $this->user->save();
         return $this->user;
     }
+    public function getOne(int $id): object
+    {
+    }
+    public function findAll(): object
+    {
+    }
+    public function update(object $content): object
+    {
+    }
+    public function delete(object $content): object
+    {
+    }
+    public function save(object $content): object
+    {
+    }
 }

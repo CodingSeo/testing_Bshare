@@ -1,6 +1,6 @@
 <?php
-namespace App\DTO\Content;
-class PostContentDTO extends ContentDTO{
+namespace App\DTO;
+class PostContentDTO{
     protected $post_id;
 
     /**

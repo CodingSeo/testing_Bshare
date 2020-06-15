@@ -2,69 +2,80 @@
 
 namespace App\Repositories\Implement;
 
-use App\DTO\Content\PostContentDTO;
+use App\DTO\CommentsDTO;
+use App\DTO\ContentDTO;
+use App\DTO\PostDTO;
 use App\EloquentModel\Content;
 use App\EloquentModel\Post;
+use App\Mapper\MapperService;
 use App\Repositories\interfaces\PostRepository;
 
 class PostRepositoryImp implements PostRepository
 {
     protected $post, $content, $mapper;
-    public function __construct(Post $post, Content $content)
+    public function __construct(Post $post, Content $content, MapperService $mapper)
     {
         $this->post = $post;
         $this->content = $content;
+        $this->mapper = $mapper;
     }
-    public function getPostById(int $post_id)
+    public function getOne(int $id): object
     {
-        $post = $this->post->findOrFail($post_id);
-        return $post;
-        return $this->mapper->map($post, $post);
+        $post = $this->post->find($id);
+        return $this->mapper->map($post, PostDTO::class);
     }
-    public function savePost($post_info)
+    public function findAll(): array
     {
-        $this->post->fill($post_info);
+        $posts = $this->post->all();
+        return  $this->mapper->mapArray($posts, PostDTO::class);
+    }
+    public function update(object $content): object
+    {
+        $this->post->fill((array)$content);
+        $this->post->exists=true;
+        dd($this->post->update((array)$content));
+        // $post = $this->post->find($content->id);
+        // $post->update((array)$content);
+        // return $this->mapper->map($post, PostDTO::class);
+        return $this->mapper->map($this->post, PostDTO::class);
+    }
+    public function delete(object $content)
+    {
+        $this->post->fill((array)$content);
+        $this->post->exists=true;
+        dd($this->post->delete());
+        return $this->post->delete();
+    }
+    public function save($content): object
+    {
+        $this->post->fill((array) $content);
         $this->post->save();
-        return $this->post;
+        return $this->mapper->map($this->post, PostDTO::class);;
     }
-    public function getContent($post)
+    public function getContent(object $content): object
     {
-        $content = $post->content()->first();
-        return $content;
+        $this->post->fill((array) $content);
+        $content = $this->post->content()->first();
+        return $this->mapper->map($content, ContentDTO::class);
     }
-    public function getComments($post)
+    public function getComments(object $content): array
     {
-        return $post->comments()->with('replies')->whereNull('parent_id')
+        $this->post->fill((array) $content);
+        $comments = $this->post->comments()->with('replies')->whereNull('parent_id')
             ->latest()->get();
+        return $this->mapper->mapArray($comments, CommentsDTO::class);
     }
-    public function saveContent($post_id, $body)
+    public function saveContent(int $post_id, array $content) : object
     {
         $this->content->post_id = $post_id;
-        $this->content->text = $body;
+        $this->content->fill($content);
         $this->content->save();
-        return $this->content;
+        return $this->mapper->map($this->content, ContentDTO::class);
     }
-    public function inceaseViewCount($post)
+    public function updateContent($post, array $content) : object
     {
-        $post->view_count++;
-        $post->save();
-    }
-    public function updatePost($post, $post_info)
-    {
-        $post = $post->update($post_info);
-        $this->dto->map($post);
-        return $this->dto;
-    }
-    public function updateContent($post, $body)
-    {
-        $post->content()->update([
-            'text' => $body
-        ]);
-        $this->dto->map($this->getContent($post));
-        return $this->dto;
-    }
-    public function deletePost($post)
-    {
-        return $post->delete();
+        $post_content = $this->content->where('post_id',$post->id)->first();
+        $post_content->update($content);
+        return $this->mapper->map($post_content, ContentDTO::class);
     }
 }

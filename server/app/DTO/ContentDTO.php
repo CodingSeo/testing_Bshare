@@ -1,18 +1,11 @@
 <?php
 
-namespace App\DTO\Content;
+namespace App\DTO;
 
-use ReflectionClass;
-use ReflectionProperty;
-
-abstract class ContentDTO
+class ContentDTO
 {
-    public function __construct(array $parameters = [])
-    {
-        $class = new ReflectionClass(static::class);
-        foreach ($class->getProperties(ReflectionProperty::IS_PROTECTED) as $reflectionProperty) {
-            $property = $reflectionProperty->getName();
-            if(array_key_exists($property,$parameters))$this->{$property} = $parameters[$property];
-        }
-    }
+    /**
+     * @var string
+     */
+    public $text;
 }

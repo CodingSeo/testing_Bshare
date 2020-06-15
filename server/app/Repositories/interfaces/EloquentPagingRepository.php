@@ -4,5 +4,5 @@ namespace App\Repositories\Interfaces;
 
 interface EloquentPagingRepository
 {
-    public function paginate(object $content, int $paginate);
+    public function getPaginate(object $content, int $paginate);
 }

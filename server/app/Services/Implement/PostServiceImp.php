@@ -15,50 +15,62 @@ class PostServiceImp implements PostService
         $this->post_repository = $post_repository;
     }
 
-    public function getPost($content)
+    public function getPost(array $content): array
     {
-        $post = $this->post_repository->getPostById($content['post_id']);
-        // $this->error_checker->check($post);
-        if (!$post) throw new \App\Exceptions\ModuleNotFound('Post not Found');
+        $post = $this->post_repository->getOne($content['post_id']);
+        // $this->error_checker->checkId($post);
+
+        if (!$post->id) throw new \App\Exceptions\ModuleNotFound('Post not Found');
         $content = $this->post_repository->getContent($post);
         $comments = $this->post_repository->getComments($post);
-        $this->post_repository->inceaseViewCount($post);
-
-        $postWithInfo = collect($post)
-            ->merge($content)
-            ->union(['comments' => $comments]);
-
-        return $postWithInfo;
+        //view increased
+        $post->view_count++;
+        $post = $this->post_repository->update($post);
+        if (!$post) throw new \App\Exceptions\ModuleNotFound('Post not updated');
+        return array([
+            'post' => $post,
+            'content' => $content,
+            'comments' => $comments
+        ]);
     }
 
-    public function storePost($post_info)
+    public function storePost(array $content): array
     {
         DB::beginTransaction();
-        $post = $this->post_repository->savePost($post_info);
-        $content = $this->post_repository->saveContent($post->id, $post_info['body']);
+        $post = $this->post_repository->save($content);
+        if (!$post->id) {
+            DB::rollback();
+            // throw new \App\Exceptions\ModuleNotFound('Post not saved');
+        };
+        $content = $this->post_repository->saveContent($post->id, $content);
         DB::commit();
-        $postWithContent = collect($post)->merge($content);
-        return $postWithContent;
+
+        return array([
+            'post' => $post,
+            'content' => $content,
+        ]);
     }
 
-    public function updatePost($post_id, $post_info)
+    public function updatePost(array $content)
     {
-        $post = $this->post_repository->getPostById($post_id);
-        if (!$post) return "no post";
+        $post = $this->post_repository->getOne($content['post_id']);
+        if (!$post->id) throw new \App\Exceptions\ModuleNotFound('Post do not exist');
         DB::beginTransaction();
-        $post = $this->post_repository->updatePost($post, $post_info);
-        $content = $this->post_repository->updateContent($post, $post_info['body']);
+        $post = $this->post_repository->update($post);
+        $content = $this->post_repository->updateContent($post, $content);
         DB::commit();
-        $postWithContent = collect($post)->merge($content);
-        return $postWithContent;
+        return array([
+            'post' => $post,
+            'content' => $content,
+        ]);
     }
 
-    public function deletePost($post_id)
+    public function deletePost(array $content)
     {
-        $post = $this->post_repository->getPostById($post_id);
-        if (!$post) return "no post";
-        $result = $this->post_repository->deletePost($post);
-        if (!$result) return 'delete failed';
-        return collect($post);
+        $post = $this->post_repository->getOne($content['post_id']);
+        if (!$post->id) throw new \App\Exceptions\ModuleNotFound('Post not Found');
+        $delete_result = $this->post_repository->delete($post);
+        if (!$delete_result) return 'delete failed';
+        return true;
     }
 }

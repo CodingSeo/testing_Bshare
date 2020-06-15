@@ -1,21 +1,31 @@
 <?php
 
-namespace App\DTO\Mapper;
+namespace App\Mapper;
 
 use JsonMapper;
-use phpDocumentor\Reflection\Types\Mixed_;
 
 class JSONMapperService implements MapperService
 {
-    private $mapper;
+    public $mapper;
     public function __construct(JsonMapper $mapper)
     {
         $mapper->bStrictNullTypes = false;
         $mapper->bEnforceMapType = false;
-        $this->$mapper = $mapper;
+        $this->mapper = $mapper;
     }
-    public function map(Mixed_ $object, string $path)
+    public function map($object, string $path)
     {
+        if(!$object) return new $path;
+        $object = json_decode($object);
         return $this->mapper->map($object, new $path);
+    }
+    public function mapArray($object, string $path){
+        $array = array();
+        if(!$object) return $array;
+        $object = json_decode($object);
+        foreach($object as $item){
+            array_push($array,$this->mapper->map($item, new $path));
+        }
+        return $array;
     }
 }

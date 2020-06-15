@@ -42,7 +42,7 @@ class PostsController extends Controller
     public function update(PostsRequestUpdate $request)
     {
         $content = $request->only([
-            'post_id', 'title', 'body', 'category_id'
+            'post_id', 'title', 'body', 'category_id',
         ]);
         $post = $this->service->updatePost($content);
         return $post;

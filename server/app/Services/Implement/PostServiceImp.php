@@ -56,7 +56,7 @@ class PostServiceImp implements PostService
         $post = $this->post_repository->getOne($content['post_id']);
         if (!$post->id) throw new \App\Exceptions\ModuleNotFound('Post do not exist');
         DB::beginTransaction();
-        $post = $this->post_repository->update($post);
+        $post = $this->post_repository->update($content);
         $content = $this->post_repository->updateContent($post, $content);
         DB::commit();
         return array([

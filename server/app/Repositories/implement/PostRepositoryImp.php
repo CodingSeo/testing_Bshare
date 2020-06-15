@@ -29,9 +29,10 @@ class PostRepositoryImp implements PostRepository
         $posts = $this->post->all();
         return  $this->mapper->mapArray($posts, PostDTO::class);
     }
-    public function update(object $content): object
+    public function update($content): object
     {
-        $this->post->fill((array)$content);
+        $this->post->fill($content);
+        $this->post->id = $content['post_id'];
         $this->post->exists=true;
         $this->post->update((array)$content);
         // $post = $this->post->find($content->id);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CateogriesIndexRequest;
 use App\Services\Interfaces\CategoryService;
 use App\Transformers\PostTransformer;
 
@@ -14,9 +15,11 @@ class CategoriesController extends Controller
         $this->category_service = $category_service;
         $this->transformer = $transformer;
     }
-    public function index($category_id)
+    public function index(CateogriesIndexRequest $request)
     {
-        $posts = $this->category_service->getPostsWithCategory($category_id);
-        return $this->transformer->withPagination($posts);
+        $content = $request->only(['category_id']);
+        $posts = $this->category_service->getPostsWithCategory($content);
+        return response()->json($posts);
+        // return $this->transformer->withPagination($posts);
     }
 }

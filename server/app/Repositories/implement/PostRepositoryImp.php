@@ -29,21 +29,25 @@ class PostRepositoryImp implements PostRepository
         $posts = $this->post->all();
         return  $this->mapper->mapArray($posts, PostDTO::class);
     }
-    public function update($content): object
+    public function updateByDTO(object $content): object
+    {
+        $this->post->fill((array) $content);
+        $this->post->exists = true;
+        $this->post->update();
+        return $this->mapper->map($this->post, PostDTO::class);
+    }
+    public function updateByContent(array $content): object
     {
         $this->post->fill($content);
         $this->post->id = $content['post_id'];
-        $this->post->exists=true;
-        $this->post->update((array)$content);
-        // $post = $this->post->find($content->id);
-        // $post->update((array)$content);
-        // return $this->mapper->map($post, PostDTO::class);
+        $this->post->exists = true;
+        $this->post->update();
         return $this->mapper->map($this->post, PostDTO::class);
     }
     public function delete(object $content)
     {
-        $this->post->fill((array)$content);
-        $this->post->exists=true;
+        $this->post->fill((array) $content);
+        $this->post->exists = true;
         return $this->post->delete();
     }
     public function save($content): object
@@ -65,16 +69,16 @@ class PostRepositoryImp implements PostRepository
             ->latest()->get();
         return $this->mapper->mapArray($comments, CommentsDTO::class);
     }
-    public function saveContent(int $post_id, array $content) : object
+    public function saveContent(int $post_id, array $content): object
     {
         $this->content->post_id = $post_id;
         $this->content->fill($content);
         $this->content->save();
         return $this->mapper->map($this->content, ContentDTO::class);
     }
-    public function updateContent(object $post, array $content) : object
+    public function updateContent(object $post, array $content): object
     {
-        $post_content = $this->content->where('post_id',$post->id)->first();
+        $post_content = $this->content->where('post_id', $post->id)->first();
         $post_content->update($content);
         return $this->mapper->map($post_content, ContentDTO::class);
     }

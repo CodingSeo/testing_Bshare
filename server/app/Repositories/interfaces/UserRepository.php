@@ -2,6 +2,6 @@
 
 namespace App\Repositories\Interfaces;
 
-interface UserRepository extends EloquentRepository
+interface UserRepository
 {
 }

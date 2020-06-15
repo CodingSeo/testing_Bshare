@@ -16,20 +16,22 @@ class CommentServiceImp implements CommentService
     }
     public function storeComment(array $request)
     {
-        $post = $this->post_repository->getPostById($request['post_id']);
-        if (!$post) return 'no post';
+        $post = $this->post_repository->getOne($request['post_id']);
+        if (!$post->id) throw new \App\Exceptions\ModuleNotFound('Post not Found');
         $comment = $this->comment_repository->saveComment($post, $request);
         return collect($comment);
     }
+
     public function updateComment($comment_id,array $request){
         $comment = $this->comment_repository->getCommentById($comment_id);
-        if(!$comment)return 'no comments';
+        if (!$comment->id) throw new \App\Exceptions\ModuleNotFound('comment not Found');
         $this->comment_repository->updateComment($comment, $request);
         return collect($comment);
     }
+
     public function deleteComment($comment_id){
         $comment = $this->comment_repository->getCommentById($comment_id);
-        if(!$comment)return 'no comments';
+        if (!$comment->id) throw new \App\Exceptions\ModuleNotFound('comment not Found');
         $result = $this->comment_repository->deleteComment($comment);
         if(!$result) return 'failed delete comment';
         return collect($comment);

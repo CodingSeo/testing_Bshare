@@ -27,6 +27,7 @@ class PostsController extends Controller
         ]);
         $post_content_comments_array = $this->service->getPost($content);
         return $post_content_comments_array;
+        //temping
         return $this->transform->withItem($post);
     }
     public function store(PostsRequest $request)
@@ -36,6 +37,7 @@ class PostsController extends Controller
         ]);
         $post_content_array = $this->service->storePost($content);
         return $post_content_array;
+        //tempting
         return $this->transform->withItem($post);
     }
 

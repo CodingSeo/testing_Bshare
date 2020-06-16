@@ -23,6 +23,7 @@ class CommentsUpdateRequest extends ApiRequest
     public function attributes()
     {
         return [
+            'comment_id'=>'comment_id',
             'post_id' => 'post_id',
             'body' => 'body',
             'parent_id' => 'parent_id'

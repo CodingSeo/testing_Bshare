@@ -15,7 +15,7 @@ class CommentsStoreRequest extends ApiRequest
     {
         return [
             'post_id' => ['numeric', 'required'],
-            'parent_id' => ['required','nullable','numeric'],
+            'parent_id' => ['nullable','numeric'],
             'body' => ['required', 'string', 'max:255'],
         ];
     }

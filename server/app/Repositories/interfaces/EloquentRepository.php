@@ -9,6 +9,6 @@ interface EloquentRepository
     public function findAll(): array;
     public function updateByDTO(object $content): object;
     public function updateByContent(array $content): object;
-    public function delete(object $content);
+    public function delete(object $content): bool;
     public function save($content): object;
 }

@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Implement;
 
-use App\DTO\CommentsDTO;
+use App\DTO\PostCommentsDTO;
 use App\DTO\ContentDTO;
 use App\DTO\PostDTO;
 use App\EloquentModel\Content;
@@ -44,11 +44,12 @@ class PostRepositoryImp implements PostRepository
         $this->post->update();
         return $this->mapper->map($this->post, PostDTO::class);
     }
-    public function delete(object $content)
+    public function delete(object $content) : bool
     {
         $this->post->fill((array) $content);
         $this->post->exists = true;
-        return $this->post->delete();
+        $result = $this->post->delete();
+        return $result;
     }
     public function save($content): object
     {
@@ -67,7 +68,7 @@ class PostRepositoryImp implements PostRepository
         $this->post->fill((array) $content);
         $comments = $this->post->comments()->with('replies')->whereNull('parent_id')
             ->latest()->get();
-        return $this->mapper->mapArray($comments, CommentsDTO::class);
+        return $this->mapper->mapArray($comments, PostCommentsDTO::class);
     }
     public function saveContent(int $post_id, array $content): object
     {

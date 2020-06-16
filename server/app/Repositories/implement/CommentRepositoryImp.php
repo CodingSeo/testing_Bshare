@@ -2,36 +2,54 @@
 
 namespace App\Repositories\Implement;
 
+use App\DTO\CommentDTO;
 use App\EloquentModel\Comment;
+use App\Mapper\MapperService;
 use App\Repositories\interfaces\CommentRepository;
 
 class CommentRepositoryImp implements CommentRepository
 {
-    protected $comment;
-    public function __construct(Comment $comment)
+    protected $comment, $mapper;
+    public function __construct(Comment $comment, MapperService $mapper)
     {
         $this->comment = $comment;
+        $this->mapper = $mapper;
     }
-    public function saveComment($post, $request)
+    public function getOne(int $id): object
     {
-        $parent_id = null;
-        if(array_key_exists('parent_id',$request)){
-            $parent_id = $request['parent_id'];
-        };
-        $comment = $post->comments()->create([
-            'post_id'=>$post->id,
-            'body'=>$request['body'],
-            'parent_id'=>$parent_id,
-        ]);
-        return $comment;
+        $comment = $this->comment->find($id);
+        return $this->mapper->map($comment, CommentDTO::class);
     }
-    public function getCommentByID($comment_id){
-        return $this->comment->find($comment_id);
+    public function findAll(): array
+    {
+        $comments = $this->comment->all();
+        return $this->mapper->mapArray($comments, CommentDTO::class);
     }
-    public function updateComment($comment, $request){
-        return $comment->update($request);
+    public function updateByDTO(object $content): object
+    {
+        $this->comment->fill((array) $content);
+        $this->comment->exists = true;
+        $this->comment->update();
+        return $this->mapper->map($this->comment, CommentDTO::class);
     }
-    public function deleteComment($comment){
-        return $comment->delete();
+    public function updateByContent(array $content): object
+    {
+        $this->comment->fill($content);
+        $this->comment->exists = true;
+        $this->comment->update();
+        return $this->mapper->map($this->comment, CommentDTO::class);
+    }
+    public function delete(object $content): bool
+    {
+        $this->comment->fill((array) $content);
+        $this->comment->exists = true;
+        $result = $this->comment->delete();
+        return $result;
+    }
+    public function save($content): object
+    {
+        $this->comment->fill($content);
+        $this->comment->save();
+        return $this->mapper->map($this->comment, CommentDTO::class);
     }
 }

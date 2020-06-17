@@ -7,6 +7,9 @@ use App\Http\Requests\JWT\JWTRegisterRequest;
 use App\Http\Requests\JWT\JWTRequest;
 use App\Services\Interfaces\UserService;
 use App\Transformers\UserTransformer;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
 
 class JWTAuthController extends Controller
 {

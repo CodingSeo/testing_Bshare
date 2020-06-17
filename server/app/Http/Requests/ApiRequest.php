@@ -15,8 +15,8 @@ abstract class ApiRequest extends FormRequest
             'errors' => $validator->errors(),
             'links' => [
                 [
-                    'rel' => 'self',
-                    'href' => $this->getRedirectUrl(),
+                    'rel' => 'home',
+                    'href' => route('api.index'),
                 ],
             ]
         ], 422, [], JSON_PRETTY_PRINT));

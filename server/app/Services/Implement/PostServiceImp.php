@@ -24,11 +24,11 @@ class PostServiceImp implements PostService
         $post->view_count++;
         $post = $this->post_repository->updateByDTO($post);
         if (!$post) throw new \App\Exceptions\ModuleNotFound('Post not updated');
-        return array([
+        return [
             'post' => $post,
             'content' => $content,
             'comments' => $comments
-        ]);
+        ];
     }
 
     public function storePost(array $content): array
@@ -41,10 +41,10 @@ class PostServiceImp implements PostService
         };
         $content = $this->post_repository->saveContent($post->id, $content);
         DB::commit();
-        return array([
+        return [
             'post' => $post,
             'content' => $content,
-        ]);
+        ];
     }
 
     public function updatePost(array $content) : array
@@ -55,10 +55,10 @@ class PostServiceImp implements PostService
         $post = $this->post_repository->updateByContent($content);
         $content = $this->post_repository->updateContent($post, $content);
         DB::commit();
-        return array([
+        return [
             'post' => $post,
             'content' => $content,
-        ]);
+        ];
     }
 
     public function deletePost(array $content) : bool

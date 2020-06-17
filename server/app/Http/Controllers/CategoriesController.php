@@ -19,7 +19,6 @@ class CategoriesController extends Controller
     {
         $content = $request->only(['category_id']);
         $posts = $this->category_service->getPostsWithCategory($content);
-        return response()->json($posts);
-        // return $this->transformer->withPagination($posts);
+        return $this->transformer->withPagination($posts);
     }
 }

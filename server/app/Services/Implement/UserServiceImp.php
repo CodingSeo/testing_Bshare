@@ -5,6 +5,7 @@ namespace App\Services\Implement;
 use App\DTO\UserDTO;
 use App\Repositories\Interfaces\UserRepository;
 use App\Services\Interfaces\UserService;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserServiceImp implements UserService
 {
@@ -25,10 +26,11 @@ class UserServiceImp implements UserService
     public function loginUser(array $user_info){
         $email = $user_info['email'];
         $password = $user_info['password'];
-        $token = auth('api')->attempt(['email' => $email, 'password' => $password]);
+        $token = JWTAuth::attempt(['email' => $email, 'password' => $password]);
         if (!$token){
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
         return $token;
     }
 

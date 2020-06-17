@@ -3,6 +3,7 @@
 namespace App\Repositories\Implement;
 
 use App\DTO\CategoryDTO;
+use App\DTO\PostDTO;
 use App\DTO\PostPaginateDTO;
 use App\EloquentModel\Category;
 use App\Mapper\MapperService;
@@ -21,10 +22,10 @@ class CategoryRepositoryImp implements CategoryRepository
         $category  = $this->category->find($category_id);
         return $this->mapper->map($category, CategoryDTO::class);
     }
-    public function getPostsByCategory(object $category, int $page = 5)
+    public function getPostsByCategory(object $category, int $page = 5) : PostPaginateDTO
     {
         $this->category->fill((array) $category);
         $posts = $this->category->posts()->latest()->paginate($page);
-        return $this->mapper->map(collect($posts), PostPaginateDTO::class);
+        return $this->mapper->mapPaginate(collect($posts), PostPaginateDTO::class, PostDTO::class);
     }
 }

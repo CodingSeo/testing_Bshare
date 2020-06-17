@@ -20,15 +20,13 @@ class PostsController extends Controller
         $this->service = $service;
         $this->transform = $transform;
     }
-    public function show(PostsRequestIndex $request)
+    public function show(PostsRequestIndex $request) : JsonResponse
     {
         $content = $request->only([
             'post_id'
         ]);
         $post_content_comments_array = $this->service->getPost($content);
-        return $post_content_comments_array;
-        //temping
-        return $this->transform->withItem($post);
+        return $this->transform->withArray($post_content_comments_array);
     }
     public function store(PostsRequest $request)
     {
@@ -36,9 +34,7 @@ class PostsController extends Controller
             'title', 'body', 'category_id'
         ]);
         $post_content_array = $this->service->storePost($content);
-        return $post_content_array;
-        //tempting
-        return $this->transform->withItem($post);
+        return $this->transform->withArray($post_content_array);
     }
 
     public function update(PostsRequestUpdate $request)
@@ -46,8 +42,8 @@ class PostsController extends Controller
         $content = $request->only([
             'post_id', 'title', 'body', 'category_id',
         ]);
-        $post = $this->service->updatePost($content);
-        return $post;
+        $post_content_array = $this->service->updatePost($content);
+        return $this->transform->withArray($post_content_array);
     }
 
     public function destroy(PostsRequestIndex $request)

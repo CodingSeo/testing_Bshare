@@ -47,6 +47,7 @@ class CommentRepositoryImp implements CommentRepository
         $result = $this->comment->delete();
         return $result;
     }
+    //save에 관하여 saveByContent와 saveByDTO를 나누어 작업하는 것이 맞다고 본다.
     public function save($content): CommentDTO
     {
         $this->comment->fill($content);

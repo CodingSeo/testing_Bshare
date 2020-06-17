@@ -20,7 +20,8 @@ class PostsController extends Controller
         $this->service = $service;
         $this->transform = $transform;
     }
-    public function show(PostsRequestIndex $request) : JsonResponse
+
+    public function show(PostsRequestIndex $request): JsonResponse
     {
         $content = $request->only([
             'post_id'
@@ -28,7 +29,8 @@ class PostsController extends Controller
         $post_content_comments_array = $this->service->getPost($content);
         return $this->transform->withArray($post_content_comments_array);
     }
-    public function store(PostsRequest $request)
+
+    public function store(PostsRequest $request): JsonResponse
     {
         $content = $request->only([
             'title', 'body', 'category_id'
@@ -37,7 +39,7 @@ class PostsController extends Controller
         return $this->transform->withArray($post_content_array);
     }
 
-    public function update(PostsRequestUpdate $request)
+    public function update(PostsRequestUpdate $request): JsonResponse
     {
         $content = $request->only([
             'post_id', 'title', 'body', 'category_id',
@@ -46,6 +48,7 @@ class PostsController extends Controller
         return $this->transform->withArray($post_content_array);
     }
 
+    //global transform을 파사드 할 생각이다.
     public function destroy(PostsRequestIndex $request)
     {
         $content = $request->only([

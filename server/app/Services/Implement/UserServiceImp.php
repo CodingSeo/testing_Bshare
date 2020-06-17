@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services\Implement;
+
+use App\DTO\UserDTO;
 use App\Repositories\Interfaces\UserRepository;
 use App\Services\Interfaces\UserService;
 
@@ -11,11 +13,15 @@ class UserServiceImp implements UserService
     {
         $this->user_repository = $user_repository;
     }
-    public function registerUser(array $user_info)
+
+    public function registerUser(array $content) : UserDTO
     {
-        $user = $this->user_repository->registerUser($user_info);
-        return collect($user);
+        $user_check = $this->user_repository->getOneByEmail($content['email']);
+        if($user_check->id) throw new \App\Exceptions\ModuleNotFound('User already exists');
+        $user = $this->user_repository->save($content);
+        return $user;
     }
+
     public function loginUser(array $user_info){
         $email = $user_info['email'];
         $password = $user_info['password'];
@@ -25,15 +31,19 @@ class UserServiceImp implements UserService
         }
         return $token;
     }
+
     public function getUserInfo(){
+
         return auth()->user();
     }
 
     public function refreshToken(){
+
         return auth('api')->refresh();
     }
 
     public function logoutUser(){
+
         return auth()->logout();
     }
 }

@@ -18,13 +18,19 @@ class JWTAuthController extends Controller
     }
     public function register(JWTRegisterRequest $request)
     {
-        $user = $this->user_service->registerUser($request->all());
-        return $this->transform->$user;
+        $content = $request->only([
+            'name','email','password'
+        ]);
+        $user = $this->user_service->registerUser($content);
+        return response()->json($user);
+        return $this->transform->withUser($user);
     }
     public function login(JWTRequest $request)
     {
-        //middleware
-        $token = $this->user_service->loginUser($request->all());
+        $content = $request->only([
+            'email','password'
+        ]);
+        $token = $this->user_service->loginUser($content);
         return $this->transform->respondWithToken($token);
     }
 

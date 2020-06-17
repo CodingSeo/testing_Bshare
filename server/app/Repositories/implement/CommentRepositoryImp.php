@@ -15,7 +15,7 @@ class CommentRepositoryImp implements CommentRepository
         $this->comment = $comment;
         $this->mapper = $mapper;
     }
-    public function getOne(int $id): object
+    public function getOne(int $id): CommentDTO
     {
         $comment = $this->comment->find($id);
         return $this->mapper->map($comment, CommentDTO::class);
@@ -25,28 +25,29 @@ class CommentRepositoryImp implements CommentRepository
         $comments = $this->comment->all();
         return $this->mapper->mapArray($comments, CommentDTO::class);
     }
-    public function updateByDTO(object $content): object
+    public function updateByDTO(CommentDTO $comment): CommentDTO
     {
-        $this->comment->fill((array) $content);
+        $this->comment->fill((array) $comment);
         $this->comment->exists = true;
         $this->comment->update();
         return $this->mapper->map($this->comment, CommentDTO::class);
     }
-    public function updateByContent(array $content): object
+    public function updateByContent(array $content): CommentDTO
     {
         $this->comment->fill($content);
+        $this->comment->id = $content['comment_id'];
         $this->comment->exists = true;
         $this->comment->update();
         return $this->mapper->map($this->comment, CommentDTO::class);
     }
-    public function delete(object $content): bool
+    public function delete(CommentDTO $comment): bool
     {
-        $this->comment->fill((array) $content);
+        $this->comment->fill((array) $comment);
         $this->comment->exists = true;
         $result = $this->comment->delete();
         return $result;
     }
-    public function save($content): object
+    public function save($content): CommentDTO
     {
         $this->comment->fill($content);
         $this->comment->save();

@@ -32,6 +32,7 @@ abstract class ApiRequest extends FormRequest
             'min' => ':attribute should be no shorter than 8 length',
             'max'  => ':attribute should be no longer than 255 length',
             'confirmed' => ':attribute does not match',
+            'email' => ':attribute must be email type',
         ];
     }
 }

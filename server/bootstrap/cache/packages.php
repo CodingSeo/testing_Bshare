@@ -1,15 +1,4 @@
 <?php return array (
-  'dingo/api' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Dingo\\Api\\Provider\\LaravelServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'API' => 'Dingo\\Api\\Facade\\API',
-    ),
-  ),
   'facade/ignition' => 
   array (
     'providers' => 

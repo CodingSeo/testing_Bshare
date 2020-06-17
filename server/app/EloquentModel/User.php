@@ -11,15 +11,11 @@ class User extends Authenticatable implements JWTSubject
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'id','name', 'email', 'password',
     ];
 
     protected $hidden = [
-        'password', 'password_bcrypt', 'id'
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+        'password', 'password_bcrypt'
     ];
 
     public function getJWTIdentifier()
@@ -30,8 +26,7 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [
-            'firstname' => $this->firstname,
-            'lastname' => $this->lastname,
+            'name' => $this->name,
             'email' => $this->email
         ];
     }

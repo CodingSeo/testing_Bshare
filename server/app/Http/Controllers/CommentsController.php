@@ -31,7 +31,7 @@ class CommentsController extends Controller
             'comment_id','post_id','parent_id','body'
         ]);
         $comment = $this->comment_service->updateComment($content);
-        return $comment;
+        return response()->json($comment);
     }
 
     public function destroy(CommentDestoryRequest $request)
@@ -39,7 +39,7 @@ class CommentsController extends Controller
         $content = $request->only([
             'comment_id'
         ]);
-        $comment = $this->comment_service->deleteComment($content);
-        return $comment;
+        $result = $this->comment_service->deleteComment($content);
+        return $result;
     }
 }

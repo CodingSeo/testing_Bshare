@@ -33,7 +33,7 @@ class CommentServiceImp implements CommentService
     {
         $comment = $this->comment_repository->getOne($content['comment_id']);
         if (!$comment->id) throw new \App\Exceptions\ModuleNotFound('comment not Found');
-        $this->comment_repository->updateByContent($content);
+        $comment = $this->comment_repository->updateByContent($content);
         return $comment;
     }
 

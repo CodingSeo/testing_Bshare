@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostsRequest;
 use App\Http\Requests\PostsRequestIndex;
+use App\Http\Requests\PostsRequestStore;
 use App\Http\Requests\PostsRequestUpdate;
 use App\Services\Interfaces\PostService;
 use App\Transformers\PostTransformer;
@@ -30,7 +30,7 @@ class PostsController extends Controller
         return $this->transform->withArray($post_content_comments_array);
     }
 
-    public function store(PostsRequest $request): JsonResponse
+    public function store(PostsRequestStore $request): JsonResponse
     {
         $content = $request->only([
             'title', 'body', 'category_id'

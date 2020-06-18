@@ -24,6 +24,7 @@ class JSONMapperService implements MapperService
         $array = array();
         if (!$object) return $array;
         if(is_array($object)) $object = json_encode($object);
+        //array_map(recu)***
         $object = json_decode($object);
         foreach ($object as $item) {
             array_push($array, $this->mapper->map($item, new $path));

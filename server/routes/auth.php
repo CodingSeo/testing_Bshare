@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['as' => 'jwt.'], function () {
+Route::group(['as' => 'jwt.',], function () {
     Route::post('register', [
         'as' => 'register',
         'uses' => 'JWTAuthController@register',
@@ -13,7 +13,10 @@ Route::group(['as' => 'jwt.'], function () {
         'uses' => 'JWTAuthController@login'
     ]);
 
-    // //login 상태
+    //middleware checking if token is avaliable
+    //+ maybe with the client???????
+    //+ then how can we check the user id and posts id?
+    //+ should it be the
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('user', [
             'as' => 'user',
@@ -29,16 +32,16 @@ Route::group(['as' => 'jwt.'], function () {
         ]);
     });
 
-    // //socialite
-    Route::get('login/hiworks', [
-        'as' => 'login.hiworks',
-        'uses' => 'SocialiteController@redirectToProvider'
-    ]);
+    // // //socialite
+    // Route::get('login/hiworks', [
+    //     'as' => 'login.hiworks',
+    //     'uses' => 'SocialiteController@redirectToProvider'
+    // ]);
 
-    Route::get('hiworks/callback', [
-        'as' => 'hiworks.callback',
-        'uses' => 'SocialiteController@handleProviderCallback'
-    ]);
+    // Route::get('hiworks/callback', [
+    //     'as' => 'hiworks.callback',
+    //     'uses' => 'SocialiteController@handleProviderCallback'
+    // ]);
 
     // //허가가 없는 상태
     // Route::get('unauthorized', function () {

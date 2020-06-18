@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\EloquentModel\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JWT\JWTRegisterRequest;
 use App\Http\Requests\JWT\JWTRequest;
 use App\Services\Interfaces\UserService;
 use App\Transformers\UserTransformer;
-use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Facades\JWTFactory;
 
 class JWTAuthController extends Controller
 {
     protected $user_service, $transform;
-    public function __construct(UserService $user_service,UserTransformer $transform)
+    public function __construct(UserService $user_service, UserTransformer $transform)
     {
         $this->user_service = $user_service;
         $this->transform = $transform;
@@ -22,27 +21,32 @@ class JWTAuthController extends Controller
     public function register(JWTRegisterRequest $request)
     {
         $content = $request->only([
-            'name','email','password'
+            'name', 'email', 'password'
         ]);
         $user = $this->user_service->registerUser($content);
         return response()->json($user);
-        return $this->transform->withUser($user);
+        // return $this->transform->withUser($user);
     }
     public function login(JWTRequest $request)
     {
-        $content = $request->only([
-            'email','password'
-        ]);
-        $token = $this->user_service->loginUser($content);
+        $credentials = request(['email', 'password']);
+        if (! $token = auth('api')->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
         return $this->transform->respondWithToken($token);
     }
-
+    //사용안한다.
     public function user()
     {
+        $token = JWTAuth::parseToken();
+        $user = $token->authenticate();
+        dd($user);
         $user_info = $this->user_service->getUserInfo();
         return $this->transform->withUser($user_info);
     }
 
+
+    //middleware로 갑니다.
     public function refresh()
     {
         $refresh_info = $this->user_service->refreshToken();

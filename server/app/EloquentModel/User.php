@@ -3,11 +3,10 @@
 namespace App\EloquentModel;
 
 use Illuminate\Contracts\Auth\UserProvider;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Model
 {
     use Notifiable;
 
@@ -16,7 +15,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $hidden = [
-        'password', 'password_bcrypt'
+        'password_bcrypt'
     ];
 
     public function getJWTIdentifier()

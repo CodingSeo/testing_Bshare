@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\EloquentModel\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JWT\JWTRegisterRequest;
 use App\Http\Requests\JWT\JWTRequest;
 use App\Services\Interfaces\UserService;
 use App\Transformers\UserTransformer;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JWTAuthController extends Controller
 {
@@ -18,6 +16,7 @@ class JWTAuthController extends Controller
         $this->user_service = $user_service;
         $this->transform = $transform;
     }
+
     public function register(JWTRegisterRequest $request)
     {
         $content = $request->only([
@@ -27,6 +26,7 @@ class JWTAuthController extends Controller
         return response()->json($user);
         // return $this->transform->withUser($user);
     }
+
     public function login(JWTRequest $request)
     {
         $credentials = request(['email', 'password']);
@@ -35,13 +35,13 @@ class JWTAuthController extends Controller
         }
         return $this->transform->respondWithToken($token);
     }
+
+
     //사용안한다.
     public function user()
     {
-        $token = JWTAuth::parseToken();
-        $user = $token->authenticate();
-        dd($user);
         $user_info = $this->user_service->getUserInfo();
+        return $user_info;
         return $this->transform->withUser($user_info);
     }
 
@@ -53,9 +53,12 @@ class JWTAuthController extends Controller
         return $this->transform->respondWithToken($refresh_info);
     }
 
+
     public function logout()
     {
         $this->user_service->logoutUser();
         return $this->transform->logout();
     }
+
+
 }

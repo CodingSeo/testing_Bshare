@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\EloquentModel\User;
 use App\Http\Controllers\Controller;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class HomeController extends Controller
 {
@@ -13,6 +15,11 @@ class HomeController extends Controller
     // }
     public function index()
     {
+        $user = new User();
+
+        $test = auth('api')->tokenById('test@test12');
+        dd($test);
+
         return response()->json([
             'name' => config('project.name') . ' API',
             'massage' => 'This is a base endpoint of Bshare API.',

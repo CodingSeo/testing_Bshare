@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['as' => 'jwt.',], function () {
+
     Route::post('register', [
         'as' => 'register',
         'uses' => 'JWTAuthController@register',
@@ -13,11 +14,12 @@ Route::group(['as' => 'jwt.',], function () {
         'uses' => 'JWTAuthController@login'
     ]);
 
+
     //middleware checking if token is avaliable
     //+ maybe with the client???????
     //+ then how can we check the user id and posts id?
     //+ should it be the
-    Route::group(['middleware' => 'auth:api'], function () {
+    Route::group(['middleware' => 'jwt.verify'], function () {
         Route::get('user', [
             'as' => 'user',
             'uses' => 'JWTAuthController@user'
